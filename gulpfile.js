@@ -5,31 +5,36 @@ var runSequence = require('run-sequence');
 
 var paths = {
   js_files: [
-    'js/willowApp.js'
+    'app/js/willowApp.js'
   ],
+  build_js_files: 'build/js/willowApp.js',
   vendor_js_files: [
     'node_modules/material-design-lite/material.min.js'
   ],
-  build_js_vendor_file: 'vendor.js',
+  build_vendor_js_file: 'vendor.js',
+  build_vendor_js_files: 'build/js/vendor.js',
   build_js_folder: 'build/js/',
 
   sass_files: 'app/sass/**/*.sass',
   css_files: 'app/css/**/*.css',
   css_folder: 'app/css/',
-  build_css_file: 'app.css',
+  build_css_file: 'willowStyle.css',
+  build_css_files: 'build/css/willowStyle.css',
   build_css_folder: 'build/css/',
   vendor_css_files: [
     'node_modules/material-design-lite/material.min.css'
   ],
+  build_vendor_css_file: 'vendor.css',
+  build_vendor_css_files: 'build/css/vendor.css',
 
-  font_files: 'https://fonts.googleapis.com/icon?family=Material+Icons',
+  font_files: 'app/fonts/**/*',
   build_font_folder: 'build/fonts/',
 
   image_files: 'app/img/**/*',
-  build_image_folder: 'build/img',
+  build_image_folder: 'build/img/',
 
   jade_index_file: 'app/index.jade',
-  index_file: 'index.html',
+  index_file: 'app/index.html',
   index_folder: 'app/',
   build_index_folder: 'build/',
 
@@ -48,7 +53,7 @@ var onError = function(err) {
  */
 
 gulp.task('sass', function() {
-  return gulp.src(paths.sass_styles_files)
+  return gulp.src(paths.sass_files)
     .pipe($.plumber({
       errorPlumber: onError
     }))
@@ -57,7 +62,7 @@ gulp.task('sass', function() {
       sourceComments: 'normal'
     }))
     .pipe($.plumber.stop())
-    .pipe(gulp.dest(paths.styles_folder));
+    .pipe(gulp.dest(paths.css_folder));
 });
 
 gulp.task('jade', function() {
@@ -92,7 +97,7 @@ gulp.task('vendor:js', function() {
     .pipe($.concat(paths.build_vendor_js_file))
     .pipe($.uglify())
     .pipe($.plumber.stop())
-    .pipe(gulp.dest(paths.build_js_files));
+    .pipe(gulp.dest(paths.build_js_folder));
 });
 
 gulp.task('js', ['vendor:js'], function() {
@@ -119,14 +124,12 @@ gulp.task('index', function() {
       ignorePath: paths.build_index_folder
     }))
     .pipe($.inject(gulp.src([paths.build_js_files, paths.build_css_files], {read: false}), {
-        name: 'inject',
-        addRootSlash: false,
-        ignorePath: paths.build_index_folder
-      }))
-    //TODO
+      name: 'inject',
+      addRootSlash: false,
+      ignorePath: paths.build_index_folder
+    }))
     .pipe($.removeHtmlComments())
     .pipe($.removeEmptyLines())
-    //
     .pipe($.plumber.stop())
     .pipe(gulp.dest(paths.build_index_folder));
 });
@@ -164,6 +167,10 @@ gulp.task('fonts', function() {
 gulp.task('images', function() {
   return gulp.src(paths.image_files)
     .pipe(gulp.dest(paths.build_image_folder));
+});
+
+gulp.task('clean', function() {
+  return del(paths.build_index_folder);
 });
 
 gulp.task('build', function(callback) {
