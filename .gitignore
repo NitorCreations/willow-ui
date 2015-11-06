@@ -31,3 +31,6 @@ node_modules
 
 # Node debugging log
 npm-debug.log
+
+# Compiled app
+build/

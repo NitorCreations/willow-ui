@@ -17,3 +17,5 @@ $ npm install
 # Tech
 
 [Redux](http://redux.js.org/)
+
+[Material Design Lite](http://www.getmdl.io/)

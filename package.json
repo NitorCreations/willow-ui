@@ -1,10 +1,11 @@
 {
   "name": "willow-ui",
   "version": "0.0.1",
-  "description": "Front-end for Willow cloud monitoring",
+  "description": "Client for Willow cloud msnagement and monitoring",
   "main": "index.js",
   "scripts": {
-    "test": "gulp test"
+    "test": "gulp test",
+    "build": "npm install && gulp build"
   },
   "repository": {
     "type": "git",
@@ -23,6 +24,7 @@
   },
   "homepage": "https://github.com/NitorCreations/willow-ui#readme",
   "dependencies": {
+    "material-design-lite": "^1.0.6",
     "react": "^0.14.2",
     "react-redux": "^4.0.0",
     "redux": "^3.0.4"
