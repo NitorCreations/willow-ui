@@ -49,6 +49,17 @@ var onError = function(err) {
 };
 
 /*
+ * Dev environment tasks
+ */
+
+gulp.task('default', ['serve']);
+
+gulp.task('serve', function() {
+  gulp.watch(paths.jade_index_file, ['jade']);
+  gulp.watch(paths.sass_files, ['sass']);
+});
+
+/*
  * Preprocessor tasks
  */
 
@@ -175,6 +186,7 @@ gulp.task('clean', function() {
 
 gulp.task('build', function(callback) {
   return runSequence(
+    ['jade', 'sass'],
     'clean',
     ['js', 'css'],
     'index',
