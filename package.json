@@ -28,7 +28,28 @@
     "redux": "^3.0.4"
   },
   "devDependencies": {
+    "babel": "^6.0.15",
+    "chai": "^3.4.0",
+    "del": "^2.0.2",
+    "eslint": "^1.8.0",
+    "esprima-fb": "^15001.1001.0-dev-harmony-fb",
     "gulp": "^3.9.0",
-    "redux-devtools": "^2.1.5"
+    "gulp-babel": "^6.1.0",
+    "gulp-concat": "^2.6.0",
+    "gulp-csso": "^1.0.1",
+    "gulp-inject": "^3.0.0",
+    "gulp-jade": "^1.1.0",
+    "gulp-jshint": "^1.12.0",
+    "gulp-load-plugins": "^1.1.0",
+    "gulp-plumber": "^1.0.1",
+    "gulp-reactify": "^3.0.1",
+    "gulp-sass": "^2.1.0",
+    "gulp-uglify": "^1.4.2",
+    "jshint-stylish": "^2.0.1",
+    "mocha": "^2.3.3",
+    "redux-devtools": "^2.1.5",
+    "run-sequence": "^1.1.4",
+    "sinon": "^1.17.2",
+    "sinon-chai": "^2.8.0"
   }
 }
