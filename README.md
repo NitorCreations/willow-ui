@@ -14,6 +14,16 @@ Install dependencies
 $ npm install
 ```
 
+Run tests
+```
+$ gulp test
+```
+
+Create build
+```
+$ gulp build
+```
+
 # Tech
 
 [Redux](http://redux.js.org/)
