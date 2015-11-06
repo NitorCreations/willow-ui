@@ -10,9 +10,9 @@ Prerequirements
 * [Node.js](https://nodejs.org/)
 
 Install dependencies
-´´´
+```
 $ npm install
-´´´
+```
 
 # Tech
 
