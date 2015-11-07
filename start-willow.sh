@@ -1,5 +1,6 @@
 #!/bin/sh
 
+# Set env variable BUILD if you need a specific build - otherwise the last successful build is fetched
 if [ -z "$BUILD" ]; then
   BUILD=$(curl -s https://bob.nitorio.us/jenkins/job/willow-integrationtests/api/xml/?xpath=/mavenModuleSet/lastSuccessfulBuild/number | awk -F'<|>' '{ print $3 }')
 fi
