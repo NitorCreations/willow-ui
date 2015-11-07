@@ -6,7 +6,7 @@ var runSequence = require('run-sequence');
 
 var paths = {
   js_files: [
-    'app/js/willowApp.js'
+    'ui/js/willowApp.js'
   ],
   build_js_files: 'build/js/willowApp.js',
   vendor_js_files: [
@@ -16,9 +16,9 @@ var paths = {
   build_vendor_js_files: 'build/js/vendor.js',
   build_js_folder: 'build/js/',
 
-  sass_files: 'app/sass/**/*.sass',
-  css_files: 'app/css/**/*.css',
-  css_folder: 'app/css/',
+  sass_files: 'ui/sass/**/*.sass',
+  css_files: 'ui/css/**/*.css',
+  css_folder: 'ui/css/',
   build_css_file: 'willowStyle.css',
   build_css_files: 'build/css/willowStyle.css',
   build_css_folder: 'build/css/',
@@ -28,15 +28,15 @@ var paths = {
   build_vendor_css_file: 'vendor.css',
   build_vendor_css_files: 'build/css/vendor.css',
 
-  font_files: 'app/fonts/**/*',
+  font_files: 'ui/fonts/**/*',
   build_font_folder: 'build/fonts/',
 
-  image_files: 'app/img/**/*',
+  image_files: 'ui/img/**/*',
   build_image_folder: 'build/img/',
 
-  jade_index_file: 'app/index.jade',
-  index_file: 'app/index.html',
-  index_folder: 'app/',
+  jade_index_file: 'ui/index.jade',
+  index_file: 'ui/index.html',
+  index_folder: 'ui/',
   build_index_folder: 'build/',
 
   test_files: 'tests/**/*.spec.js',
@@ -57,11 +57,10 @@ gulp.task('default', ['serve']);
 
 gulp.task('serve', function() {
   browserSync.init({
-    proxy: "localhost:5120/ui"
-    /*server: {
-      baseDir: "./"
+    server: {
+      baseDir: "./",
     },
-    startPath: "/app/"*/
+    startPath: "/ui/"
   });
 
   gulp.watch(paths.js_files).on('change', browserSync.reload);

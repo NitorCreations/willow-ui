@@ -1,4 +1,4 @@
-/* line 1, /Users/nlaitinen/git/willow-ui/app/sass/_base.sass */
+/* line 1, /Users/nlaitinen/git/willow-ui/ui/sass/_base.sass */
 * {
   box-sizing: border-box; }
 
@@ -8,7 +8,7 @@
   font-weight: 400;
   src: local("Material Icons"), local("MaterialIcons-Regular"), url(fonts/materialicons.woff2) format("woff2"); }
 
-/* line 11, /Users/nlaitinen/git/willow-ui/app/sass/_base.sass */
+/* line 11, /Users/nlaitinen/git/willow-ui/ui/sass/_base.sass */
 .material-icons {
   font-family: 'Material Icons';
   font-weight: normal;
