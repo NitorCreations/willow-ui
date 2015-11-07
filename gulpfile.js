@@ -1,5 +1,6 @@
 var gulp = require('gulp');
 var $ = require('gulp-load-plugins')();
+var browserSync = require('browser-sync').create();
 var del = require('del');
 var runSequence = require('run-sequence');
 
@@ -55,8 +56,19 @@ var onError = function(err) {
 gulp.task('default', ['serve']);
 
 gulp.task('serve', function() {
+  browserSync.init({
+    proxy: "localhost:5120/ui"
+    /*server: {
+      baseDir: "./"
+    },
+    startPath: "/app/"*/
+  });
+
+  gulp.watch(paths.js_files).on('change', browserSync.reload);
   gulp.watch(paths.jade_index_file, ['jade']);
+  gulp.watch(paths.index_file).on('change', browserSync.reload);
   gulp.watch(paths.sass_files, ['sass']);
+  gulp.watch(paths.css_files).on('change', browserSync.reload);
 });
 
 /*
