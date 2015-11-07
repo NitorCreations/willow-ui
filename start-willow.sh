@@ -12,4 +12,4 @@ if ! [ -r willow-servers-$BUILD.jar -a -x deployer.sh ]; then
   wait
   chmod 755 deployer.sh
 fi
-./deployer.sh start test file:./backend.properties?BUILD=$BUILD
+exec ./deployer.sh start test file:./backend.properties?BUILD=$BUILD
