@@ -14,6 +14,11 @@ Install dependencies
 $ npm install
 ```
 
+Open development environment
+```
+$ gulp
+```
+
 Run tests
 ```
 $ gulp test
