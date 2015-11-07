@@ -5,9 +5,13 @@ var del = require('del');
 var runSequence = require('run-sequence');
 
 var paths = {
+  es6_files: [
+    'ui/es6/willowApp.js'
+  ],
   js_files: [
     'ui/js/willowApp.js'
   ],
+  js_folder: 'ui/js/',
   build_js_files: 'build/js/willowApp.js',
   vendor_js_files: [
     'node_modules/material-design-lite/material.min.js'
@@ -63,6 +67,7 @@ gulp.task('serve', function() {
     startPath: "/ui/"
   });
 
+  gulp.watch(paths.es6_files, ['babel']);
   gulp.watch(paths.js_files).on('change', browserSync.reload);
   gulp.watch(paths.jade_index_file, ['jade']);
   gulp.watch(paths.index_file).on('change', browserSync.reload);
@@ -73,6 +78,12 @@ gulp.task('serve', function() {
 /*
  * Preprocessor tasks
  */
+
+gulp.task('babel', function() {
+  return gulp.src(paths.es6_files)
+    .pipe($.babel())
+    .pipe(gulp.dest(paths.js_folder));
+});
 
 gulp.task('sass', function() {
   return gulp.src(paths.sass_files)

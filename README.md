@@ -29,6 +29,14 @@ Create build
 $ gulp build
 ```
 
+# Tools
+
+[Babel](https://babeljs.io/)
+
+[Sass](http://sass-lang.com/)
+
+[Jade](http://jade-lang.com/)
+
 # Tech
 
 [Redux](http://redux.js.org/)
