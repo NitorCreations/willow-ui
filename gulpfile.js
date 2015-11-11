@@ -81,7 +81,7 @@ gulp.task('serve', function() {
 
 gulp.task('babel', function() {
   return gulp.src(paths.es6_files)
-    .pipe($.babel())
+    .pipe($.babel({presets: ['es2015', 'react']}))
     .pipe(gulp.dest(paths.js_folder));
 });
 
