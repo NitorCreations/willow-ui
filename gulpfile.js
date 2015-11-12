@@ -6,13 +6,13 @@ var runSequence = require('run-sequence');
 
 var paths = {
   es6_files: [
-    'ui/es6/willowApp.js'
+    'ui/es6/willow-main.js'
   ],
   js_files: [
-    'ui/js/willowApp.js'
+    'ui/js/willow-main.js'
   ],
   js_folder: 'ui/js/',
-  build_js_files: 'build/js/willowApp.js',
+  build_js_files: 'build/js/willow-main.js',
   vendor_js_files: [
     'node_modules/material-design-lite/material.min.js'
   ],
