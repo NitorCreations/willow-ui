@@ -3,17 +3,31 @@ var webpack = require('webpack');
 
 module.exports = {
     entry: [
+        'webpack-hot-middleware/client', // WebpackDevServer host and port
         'babel-polyfill',
         './ui/js/willow-main'
     ],
     output: {
         publicPath: '/',
+        path: path.join(__dirname, '/ui'),
         filename: 'willow-main.js'
     },
+
+    resolve: {
+        extensions: ['', '.jsx', '.js', '.json'],
+        modulesDirectories: ['node_modules', 'ui/js']
+    },
+    
     module: {
         loaders: [
             {
-                loader: "babel-loader",
+                loaders: [
+                    'react-hot',
+                    'babel?' + JSON.stringify({
+                        plugins: [['transform-runtime']],
+                        presets: ['es2015', 'stage-0', 'react']
+                    })
+                ],
 
                 // Skip any files outside of your project's `src` directory
                 include: [
@@ -22,15 +36,12 @@ module.exports = {
 
                 // Only run `.js` and `.jsx` files through Babel
                 test: /\.jsx?$/,
-
-                // Options to configure babel with
-                query: {
-                    plugins: ['transform-runtime'],
-                    presets: ['es2015', 'stage-0', 'react'],
-                }
             },
         ]
     },
     devtool: 'source-map',
-    debug: true
+    debug: true,
+    plugins: [
+        new webpack.HotModuleReplacementPlugin()
+    ]
 }
