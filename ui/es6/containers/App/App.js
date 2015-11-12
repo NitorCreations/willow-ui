@@ -4,20 +4,23 @@ export default class App extends Component {
     static propTypes = {
         children: PropTypes.object.isRequired
     }
+    
 
     static contextTypes = {
         store: PropTypes.object.isRequired
     }
 
     render() {
+        console.log('hje')
+
         return (
             <div>
-                <!-- navi component goes here -->
+                <small>Here goes navi</small>
                 <h2>Hello world</h2>
                 <div className="page-content">
                     {this.props.children}
                 </div>
-                <!-- footer component goes here -->
+                <small>here goes footer</small>
             </div>
         )
     }

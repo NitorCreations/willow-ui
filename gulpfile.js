@@ -6,7 +6,8 @@ var runSequence = require('run-sequence');
 
 var paths = {
   es6_files: [
-    'ui/es6/willowApp.js'
+    'ui/es6/willowApp.js',
+    'ui/es6/**/*.js'
   ],
   js_files: [
     'ui/js/willowApp.js'
@@ -81,7 +82,7 @@ gulp.task('serve', function() {
 
 gulp.task('babel', function() {
   return gulp.src(paths.es6_files)
-    .pipe($.babel({presets: ['es2015', 'react']}))
+    .pipe($.babel({presets: ['es2015', 'react', 'stage-0']}))
     .pipe(gulp.dest(paths.js_folder));
 });
 
