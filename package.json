@@ -17,6 +17,17 @@
     "React"
   ],
   "author": "",
+  "contributors": [
+    {
+      "name": "Pasi Niemi"
+    },
+    {
+      "name": "Niko Laitinen"
+    },
+    {
+      "name": "Juha Syrjälä"
+    }
+  ],
   "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/NitorCreations/willow-ui/issues"
