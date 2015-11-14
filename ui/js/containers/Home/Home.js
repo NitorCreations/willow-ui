@@ -7,7 +7,7 @@ export default class Home extends Component {
                 <h2 className="title">Hello from Home.js</h2>
                 <span>If you modify me browser automatically updates</span>
                 <strong> without reloading the whole app</strong>
-
+                <p>Debug panel on right shows state and history of Redux store. Ctrl-H hides the debug panel.</p>
             </div>
         )
     }
