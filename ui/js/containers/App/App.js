@@ -1,4 +1,6 @@
 import React, { Component, PropTypes } from 'react';
+import { Link } from 'react-router';
+
 export default class App extends Component {
     static propTypes = {
         children: React.PropTypes.any,
@@ -9,8 +11,8 @@ export default class App extends Component {
             <div>
                 <h1 className="title">Hello from App.js</h1>
                 <ul>
-                    <li><a href="#/">Frontpage</a></li>
-                    <li><a href="#/settings">Settings</a></li>
+                    <li><Link to="/">Frontpage</Link></li>
+                    <li><Link to="settings">Settings</Link></li>
                 </ul>
                 <main className="container">
                     {this.props.children}

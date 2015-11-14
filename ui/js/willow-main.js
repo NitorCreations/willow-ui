@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import createHistory from 'history/lib/createHashHistory';
+
+// see http://rackt.org/history/stable/HashHistoryCaveats.html
+import createBrowserHistory from 'history/lib/createBrowserHistory';
 import { Provider } from 'react-redux';
 import { Router, Redirect } from 'react-router';
 import configureStore from './store/configure-store';
@@ -11,7 +13,7 @@ const store = configureStore();
 
 ReactDOM.render(
     <Provider store={store}>
-        <Router history={createHistory()}>
+        <Router history={createBrowserHistory()}>
             {routes}
         </Router>
     </Provider>
