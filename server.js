@@ -20,7 +20,9 @@ app.use(require('morgan')('short'));
     app.use(express.static(__dirname + '/'));
 })();
 
-app.get('/', function root(req, res) {
+// respond to everything with the index.html contents
+// to make domain.fi/settings style URLs work without hashes
+app.get('*', function root(req, res) {
     res.sendFile(__dirname + '/ui/index.html');
 });
 
