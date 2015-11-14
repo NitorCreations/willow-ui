@@ -7,7 +7,7 @@ export function counters(state = initialState, action) {
             var currentCounters = state.counters
 
             var counterName = action.payload.name
-            var currentValue = state.counters[name] || 0
+            var currentValue = state.counters[counterName] || 0
             var newCounters = {
                 ...currentCounters,
             }

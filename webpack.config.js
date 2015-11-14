@@ -27,8 +27,8 @@ module.exports = {
                 loaders: [
                     'react-hot',
                     'babel?' + JSON.stringify({
-                        plugins: [['transform-runtime']],
-                        presets: ['stage-0', 'es2015', 'react']
+                        plugins: ['transform-runtime'],
+                        presets: ['es2015', 'stage-0', 'react']
                     })
                 ],
 
