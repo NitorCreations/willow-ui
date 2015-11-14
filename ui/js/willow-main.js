@@ -1,15 +1,20 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import { App } from 'containers'
-import './routes'
+import React from 'react';
+import ReactDOM from 'react-dom';
+import createHistory from 'history/lib/createHashHistory';
+import { Provider } from 'react-redux';
+import { Router, Redirect } from 'react-router';
+import configureStore from './store/configure-store';
+import routes from './routes';
 
-console.log('willow-main running')
+const store = configureStore();
+
 
 ReactDOM.render(
-    <div>
-        <h1>Hello from React</h1>
-        <App/>
-        But hot reloading doesn't apply to willow-main.js
-    </div>,
+    <Provider store={store}>
+        <Router history={createHistory()}>
+            {routes}
+        </Router>
+    </Provider>
+    ,
     document.getElementById('app-root')
 );
