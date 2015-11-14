@@ -12,7 +12,7 @@ module.exports = {
     ],
     output: {
         publicPath: '/',
-        path: path.join(__dirname, '/ui'),
+        path: path.join(__dirname, '/dist/js'),
         filename: 'willow-main.js'
     },
 
