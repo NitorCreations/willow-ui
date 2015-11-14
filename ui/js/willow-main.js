@@ -8,9 +8,11 @@ import { Router, Redirect } from 'react-router';
 import configureStore from './store/configure-store';
 import routes from './routes';
 import { DevTools, DebugPanel, LogMonitor } from 'redux-devtools/lib/react';
+import startup from './service/Startup'
 
 const store = configureStore();
 
+startup(store.dispatch)
 
 ReactDOM.render(
     <div>
