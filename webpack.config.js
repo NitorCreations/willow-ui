@@ -1,6 +1,9 @@
 var path = require('path');
 var webpack = require('webpack');
 
+// sass-loader needs this
+require('es6-promise').polyfill();
+
 module.exports = {
     entry: [
         'webpack-hot-middleware/client', // WebpackDevServer host and port
@@ -37,6 +40,10 @@ module.exports = {
                 // Only run `.js` and `.jsx` files through Babel
                 test: /\.jsx?$/,
             },
+            {
+                test: /\.scss$/,
+                loader: 'style!css!sass'
+            }
         ]
     },
     devtool: 'source-map',
