@@ -1,9 +1,12 @@
 import React, { Component, PropTypes } from 'react';
+import { CounterButton } from 'components'
+console.log ('c=', CounterButton)
 export default class Settings extends Component {
     render() {
         return (
             <div>
                 <h2>Example of another page (Settings.js)</h2>
+                <CounterButton name="FooBar"/>
                 <p>
                     <strong>Lorem ipsum</strong> dolor sit amet, consectetur adipiscing elit.
                     Integer volutpat id magna sed rutrum. Vestibulum et laoreet enim. Nam
