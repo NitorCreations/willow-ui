@@ -46,7 +46,7 @@ module.exports = {
             }
         ]
     },
-    devtool: 'source-map',
+    devtool: 'cheap-module-source-map',
     debug: true,
     plugins: [
         new webpack.HotModuleReplacementPlugin()
