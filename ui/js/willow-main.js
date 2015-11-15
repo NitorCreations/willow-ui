@@ -9,12 +9,14 @@ import configureStore from './store/configure-store';
 import routes from './routes';
 import { DevTools, DebugPanel, LogMonitor } from 'redux-devtools/lib/react';
 import { syncReduxAndRouter } from 'redux-simple-router';
+import Immutable from 'immutable';
+
 import startup from './service/Startup'
 
 const history = createBrowserHistory()
-const store = configureStore();
+const store = configureStore(Immutable.fromJS({}));
 
-syncReduxAndRouter(history, store);
+//syncReduxAndRouter(history, store);
 
 startup(store.dispatch)
 

@@ -1,10 +1,10 @@
-import { combineReducers } from 'redux'
+import { combineReducers } from 'redux-immutablejs';
+
 import { counters } from './counters'
 const { routeReducer } = require('redux-simple-router');
 
 const rootReducer = combineReducers({
-    counters,
-    routing: routeReducer
+    counters
 })
 
 export default rootReducer

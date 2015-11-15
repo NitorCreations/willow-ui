@@ -46,7 +46,8 @@
     "history": "~1.13.1",
     "react-router": "~1.0.0",
     "redux-simple-router": "0.0.8",
-    "react-pure-render": "~1.0.2"
+    "react-pure-render": "~1.0.2",
+    "redux-immutablejs": "0.0.7"
   },
   "devDependencies": {
     "babel": "^6.1.18",

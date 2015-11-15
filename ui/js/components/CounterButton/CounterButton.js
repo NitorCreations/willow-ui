@@ -22,11 +22,13 @@ class CounterButton extends PureComponent {
     }
 
     render() {
-        var counter = this.props.counters[this.props.name] || 0
+        var counter = this.props.counters.get(this.props.name) || 0
         return (
             <button onClick={() => this._increment()}>{this.props.name} {counter}</button>
         )
     }
 }
 // TODO workaround for decorators
-export default connect(state => state.counters)(CounterButton)
+export default connect( state => {
+    return {counters: state.get('counters')}
+} ) (CounterButton)
