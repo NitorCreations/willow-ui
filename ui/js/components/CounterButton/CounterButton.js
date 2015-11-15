@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { PropTypes } from 'react';
+import PureComponent from 'react-pure-render/component';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as actionCreators from 'actions/counters';
@@ -7,7 +8,7 @@ import * as actionCreators from 'actions/counters';
 //@connect(state => state.counters)
 //export default class CounterButton extends Component {
 
-class CounterButton extends Component {
+class CounterButton extends PureComponent {
     static propTypes = {
         name: React.PropTypes.string,
     }
