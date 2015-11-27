@@ -11,7 +11,7 @@ export default function startup(dispatch) {
     }, 3000)
     */
     const url = 'ws://localhost:5120/poll/'
-    const websocket = new WebSocketService(dispatch, url)
+    const websocket = new WebSocketService(dispatch, url, 'poller');
     websocket.startWebSocket()
 
 }

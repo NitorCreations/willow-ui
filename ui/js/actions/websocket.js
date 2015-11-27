@@ -1,19 +1,25 @@
-export function connecting(url) {
+export function createWebsocket(instance) {
+  return {
+    type: 'WEBSOCKET_CREATED',
+    payload: { instance, }
+  };
+}
+
+export function connecting(id) {
   return {
     type: 'WEBSOCKET_CONNECTING',
-    payload: {
-      url,
-    }
+    payload: { id, }
   };
 }
 
-export function closed() {
+export function closed(id) {
   return {
     type: 'WEBSOCKET_CLOSED',
+    payload: { id, }
   };
 }
 
-export function opened(websocket) {
+export function opened(websocket, id) {
   websocket.send(JSON.stringify({
     id:"24ceec8d-ffd8-4263-8672-08b925d7a7df",
     metricKey:"/heap",
@@ -26,18 +32,20 @@ export function opened(websocket) {
   }))
   return {
     type: 'WEBSOCKET_OPENED',
+    payload: { id, }
   };
 }
 
-export function error() {
+export function error(id) {
   return {
     type: 'WEBSOCKET_ERROR',
+    payload: { id, }
   };
 }
 
-export function messageReceived(msg) {
+export function messageReceived(id, msg) {
   return {
     type: 'WEBSOCKET_MESSAGE',
-    payload: msg
+    payload: { msg, id, }
   };
 }

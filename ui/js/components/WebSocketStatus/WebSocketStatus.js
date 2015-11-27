@@ -13,12 +13,12 @@ class WebSocketStatus extends PureComponent {
       <div>WebSocket status: <strong>
         {this.props.websocket.get('state')}
         {" "}
-        {this.props.websocket.get('receivedMessages')}
+        {this.props.websocket.get('messages').length}
       </strong></div>
     )
   }
 }
 
 export default connect( state => {
-  return { websocket: state.get('websocket') }
+  return { websocket: state.get('websockets').get('poller') }
 } ) (WebSocketStatus)
