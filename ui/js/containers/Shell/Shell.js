@@ -19,12 +19,47 @@ $(window).resize(debouncer(function (e) {
 */
 
 export default class Shell extends Component {
+
+  constructor(props) {
+    super(props);
+    var term = new Terminal({
+      cols: 100,
+      rows: 40,
+      screenKeys: true,
+      cursorBlink: true,
+      useStyles: true
+    });
+    this.state = { terminal: term };
+  }
+
+
   render() {
     return (
         <div>
           <h2>Here be shell terminal</h2>
+          <div id="terminal-screen"></div>
         </div>
     );
+  }
+
+  componentWillUpdate() {
+
+  }
+
+  componentDidMount() {
+    var term = new Terminal({
+      cols: 100,
+      rows: 40,
+      screenKeys: true,
+      cursorBlink: true,
+      useStyles: true
+    });
+    term.open(document.getElementById("terminal-screen"));
+    term.on('title', function(title) {
+      document.title = title;
+    });
+    term.write('foobar testing');
+    this.setState({ terminal: term });
   }
 }
 
