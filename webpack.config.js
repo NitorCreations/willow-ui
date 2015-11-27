@@ -20,7 +20,9 @@ module.exports = {
         extensions: ['', '.jsx', '.js', '.json'],
         modulesDirectories: ['node_modules', 'ui/js']
     },
-    
+    node: {
+        fs: "empty"
+    },
     module: {
         loaders: [
             {
