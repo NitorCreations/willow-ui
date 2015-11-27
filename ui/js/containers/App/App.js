@@ -12,7 +12,7 @@ export default class App extends Component {
                 <h1 className="title">Hello from App.js</h1>
                 <ul>
                     <li><Link to="/">Frontpage</Link></li>
-                    <li><Link to="settings">Settings</Link></li>
+                    <li><Link to="Shell">Shell</Link></li>
                 </ul>
                 <main className="container">
                     {this.props.children}

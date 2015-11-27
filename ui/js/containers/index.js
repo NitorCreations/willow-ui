@@ -1,5 +1,5 @@
 export NotFound from './NotFound/NotFound'
 export Home from './Home/Home'
-export Settings from './Settings/Settings'
+export Shell from './Shell/Shell'
 
 export App from './App/App'
