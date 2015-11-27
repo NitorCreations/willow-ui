@@ -13,7 +13,7 @@ class WebSocketService {
     this.actions.connecting(this.url)
     this.ws.onopen = () => {
       console.info('WebSocket opened to ', this.url)
-      this.actions.opened()
+      this.actions.opened(this.ws)
     }
     this.onerror = (e) => {
       console.error('WebSocket error', e)
