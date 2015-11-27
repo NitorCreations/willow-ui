@@ -5,16 +5,16 @@ const initialState = Immutable.fromJS({state: 'closed'})
 export function websocket(state = initialState, action) {
   switch (action.type) {
     case 'WEBSOCKET_CONNECTING':
-      return state.updateIn(['state'], 'connecting')
+      return state.updateIn(['state'], () => 'connecting')
 
     case 'WEBSOCKET_OPENED':
-      return state.updateIn(['state'], 'open')
+      return state.updateIn(['state'], () => 'open')
 
     case 'WEBSOCKET_CLOSED':
-      return state.updateIn(['state'], 'closed')
+      return state.updateIn(['state'], () => 'closed')
 
     case 'WEBSOCKET_ERROR':
-      return state.updateIn(['state'], 'error')
+      return state.updateIn(['state'], () => 'error')
 
     case 'WEBSOCKET_MESSAGE':
       // TODO add functionality

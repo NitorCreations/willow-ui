@@ -11,7 +11,7 @@ class WebSocketService {
   startWebSocket() {
     this.ws = new WebSocket(this.url)
     this.actions.connecting(this.url)
-    this.ws.onopen = (e) => {
+    this.ws.onopen = () => {
       console.info('WebSocket opened to ', this.url)
       this.actions.opened()
     }

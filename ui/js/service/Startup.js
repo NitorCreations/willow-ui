@@ -1,6 +1,6 @@
 import { bindActionCreators } from 'redux';
 import * as actionCreators from 'actions/counters';
-import WebSocketService from 'WebSocketService'
+import WebSocketService from 'service/WebSocketService'
 
 export default function startup(dispatch) {
     const actions = bindActionCreators(actionCreators, dispatch);
@@ -12,5 +12,6 @@ export default function startup(dispatch) {
     */
     const url = 'ws://localhost:5120/uiws/poll'
     const websocket = new WebSocketService(dispatch, url)
+    websocket.startWebSocket()
 
 }
