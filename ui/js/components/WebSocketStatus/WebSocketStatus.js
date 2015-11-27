@@ -13,7 +13,7 @@ class WebSocketStatus extends PureComponent {
       <div>WebSocket status: <strong>
         {this.props.websocket.get('state')}
         {" "}
-        {this.props.websocket.get('messages').length}
+        {this.props.websocket.get('messages').count()}
       </strong></div>
     )
   }
