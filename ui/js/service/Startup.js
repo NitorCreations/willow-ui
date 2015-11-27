@@ -10,7 +10,7 @@ export default function startup(dispatch) {
         actions.increment('Foobar counter')
     }, 3000)
     */
-    const url = 'ws://localhost:5120/uiws/poll'
+    const url = 'ws://localhost:5120/poll/'
     const websocket = new WebSocketService(dispatch, url)
     websocket.startWebSocket()
 
