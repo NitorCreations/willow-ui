@@ -29,7 +29,7 @@ export function opened(websocket, id) {
     minSteps:10,
 
     tags:["host_vempele.local"]
-  }))
+  }));
   return {
     type: 'WEBSOCKET_OPENED',
     payload: { id, }

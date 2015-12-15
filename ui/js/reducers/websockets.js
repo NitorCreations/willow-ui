@@ -1,4 +1,5 @@
 import Immutable from 'immutable';
+import * as log from '../util/log';
 
 const initialState = Immutable.fromJS({state: 'closed'})
 
@@ -27,7 +28,7 @@ export function websockets(state = initialState, action) {
 
     case 'WEBSOCKET_MESSAGE':
       // TODO add functionality
-      console.log('got message', action)
+      log.log('got message', action);
       return state.updateIn([action.payload.id, 'messages'], (msgs) => Immutable.fromJS(msgs.push(action.payload.msg)))
   }
   return state
