@@ -92,6 +92,7 @@
     "gulp-uglify": "^1.4.2",
     "jsdom": "^7.2.1",
     "jshint-stylish": "^2.1.0",
+    "jsverify": "^0.7.1",
     "mocha": "^2.3.3",
     "morgan": "~1.6.1",
     "node-sass": "~3.4.2",
