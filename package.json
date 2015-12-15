@@ -4,7 +4,8 @@
   "description": "Client for Willow cloud msnagement and monitoring",
   "main": "index.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "test": "mocha --compilers js:babel-core/register  --require ./test/test_helper.js  --recursive"
   },
   "repository": {
     "type": "git",
@@ -29,6 +30,9 @@
     },
     {
       "name": "Sami Airaksinen"
+    },
+    {
+      "name": "Reko Jokelainen"
     }
   ],
   "license": "Apache-2.0",
