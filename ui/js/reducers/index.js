@@ -24,6 +24,6 @@ const rootReducer = combineReducers({
     counters,
     websockets,
     routing: immutableConverter(routeReducer)
-})
+});
 
 export default rootReducer
