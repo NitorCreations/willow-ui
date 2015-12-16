@@ -1,7 +1,7 @@
 import jsdom from 'jsdom';
 import chai from 'chai';
 import chaiImmutable from 'chai-immutable';
-
+import sinon from 'sinon-chai';
 import matchers from './matchers';
 
 const doc = jsdom.jsdom('<!doctype html><html><body></body></html>');
@@ -17,4 +17,5 @@ Object.keys(window).forEach((key) => {
 });
 
 chai.use(chaiImmutable);
+chai.use(sinon);
 chai.use(matchers);
