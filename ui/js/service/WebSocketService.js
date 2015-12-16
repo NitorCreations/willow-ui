@@ -1,43 +1,71 @@
-import { bindActionCreators } from 'redux';
-import * as actionCreators from 'actions/websocket';
 import * as log from '../util/log'
-
+import createUuid from '../util/uuid'
+import {noop} from '../util/util';
+import {createWebSocket} from './WebSocketProvider'
+/**
+ * Handles the creation, closing, and message traffic for web sockets.
+ */
 class WebSocketService {
-  constructor(dispatch, url, id) {
+
+  /**
+   * Create a new web socket service. Call {@link WebSocketService#open} to open the web socket
+   * @param name a human-readable name of the socket
+   * @param url the url endpoint
+   * @param onMsg
+   * @param onOpened called with {ws, id, name} when the web socket is opened
+   * @param onError called with {ws, id, name, error} when the web socket receives an error
+   * @param onClose called with {ws, id, name} when the web socket is closed
+   * @param onStart called with {ws, id, name} when the web socket is started
+   */
+  constructor({name, url, onOpened=noop, onMsg=noop, onError=noop, onClose=noop, onStart=noop}) {
+    var uuid = createUuid();
+    this.id = uuid;
+    this.name = name || `socket ${this.id}`;
     this.url = url;
-    this.id = id;
-    this.actions = bindActionCreators(actionCreators, dispatch);
-    log.log(this.actions);
+    this.onClose = onClose;
+    this.onError = onError;
+    this.onMsg = onMsg;
+    this.onOpened = onOpened;
+    this.onStart = onStart;
   }
 
-  startWebSocket() {
-    this.ws = new WebSocket(this.url);
-    this.actions.createWebsocket(this);
-    this.actions.connecting(this.id);
+  /**
+   * Open the web socket and bind event handlers
+   * @returns {WebSocketService} this for chaining
+   */
+  open() {
+    this.ws = createWebSocket(this.url);
+    this.onStart(this.id);
+
     this.ws.onopen = () => {
       log.info('WebSocket opened to ', this.url);
-      this.actions.opened(this.ws, this.id);
+      this.onOpened({ws: this.ws, id: this.id, name: this.name});
     };
-    this.onerror = (e) => {
+    this.ws.onerror = (e) => {
       log.error('WebSocket error', e);
-      this.actions.error()
-
+      this.onError({ws: this.ws, id: this.id, name: this.name, error: e});
     };
-    this.onclose = (e) => {
+    this.ws.onclose = () => {
       log.info('WebSocket closed');
-      this.actions.closed()
+      this.onClose({ws: this.ws, id: this.id, name: this.name});
     };
+
     this.ws.onmessage = (e) => {
       try {
         var msg = JSON.parse(e.data);
-        this.actions.messageReceived(this.id, msg)
+        this.onMsg({msg, id: this.id});
       } catch(e) {
         log.error('Got bad data from WebSocket', e);
-        this.ws.close()
+        this.ws.close();
       }
     };
+    return this;
   }
-  stopWebSocket() {
+
+  /**
+   * Close the web socket
+   */
+  close() {
     if(this.ws) {
       this.ws.close();
     }
