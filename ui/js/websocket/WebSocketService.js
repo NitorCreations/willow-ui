@@ -2,8 +2,16 @@ import * as log from '../util/log'
 import createUuid from '../util/uuid'
 import {noop} from '../util/util';
 import {createWebSocket} from './WebSocketProvider'
+
 /**
  * Handles the creation, closing, and message traffic for web sockets.
+ *
+ * Example:
+ * <pre>
+ *    new WebSocketService('ws://...', 'test-ws')
+ *      .onOpened(({ws}) => ws.send(JSON.stringify({ my: 'data' })))
+ *      .onMsg(({name, msg}) => console.log(`Got message from ${name}: ${msg}`))
+ * </pre>
  */
 class WebSocketService {
 
@@ -11,22 +19,71 @@ class WebSocketService {
    * Create a new web socket service. Call {@link WebSocketService#open} to open the web socket
    * @param name a human-readable name of the socket
    * @param url the url endpoint
-   * @param onMsg
-   * @param onOpened called with {ws, id, name} when the web socket is opened
-   * @param onError called with {ws, id, name, error} when the web socket receives an error
-   * @param onClose called with {ws, id, name} when the web socket is closed
-   * @param onStart called with {ws, id, name} when the web socket is started
    */
-  constructor({name, url, onOpened=noop, onMsg=noop, onError=noop, onClose=noop, onStart=noop}) {
-    var uuid = createUuid();
-    this.id = uuid;
+  constructor(url, name) {
+    this.id = createUuid();
     this.name = name || `socket ${this.id}`;
     this.url = url;
-    this.onClose = onClose;
-    this.onError = onError;
-    this.onMsg = onMsg;
-    this.onOpened = onOpened;
-    this.onStart = onStart;
+    this._onClose = [];
+    this._onError = [];
+    this._onMsg = [];
+    this._onOpened = [];
+    this._onStart = [];
+  }
+
+  /**
+   * Add an onClose callback to the web socket. The function will be called
+   * with {id, name, ws}
+   * @param {Function} fn the callback
+   * @return {WebSocketService} this for chaining
+   */
+  onClose(fn) {
+    this._onClose.push(fn);
+    return this;
+  }
+
+  /**
+   * Add a callback to the opened event. The function will be called
+   * with {id, name, ws}
+   * @param {Function} fn the callback
+   * @return {WebSocketService} this for chaining
+   */
+  onOpened(fn) {
+    this._onOpened.push(fn);
+    return this;
+  }
+
+  /**
+   * Add a callback for messages. The function will be called
+   * with {id, name, msg}
+   * @param {Function} fn the callback
+   * @return {WebSocketService} this for chaining
+   */
+  onMsg(fn) {
+    this._onMsg.push(fn);
+    return this;
+  }
+
+  /**
+   * Add a callback for errors. The function will be called
+   * with {id, name, error}
+   * @param {Function} fn the callback
+   * @return {WebSocketService} this for chaining
+   */
+  onError(fn) {
+    this._onError.push(fn);
+    return this;
+  }
+
+  /**
+   * Add a callback for the start event, before the web socket is opened. The function will be called
+   * with {id, name, ws}
+   * @param {Function} fn the callback
+   * @return {WebSocketService} this for chaining
+   */
+  onStart(fn) {
+    this._onStart.push(fn);
+    return this;
   }
 
   /**
@@ -34,29 +91,29 @@ class WebSocketService {
    * @returns {WebSocketService} this for chaining
    */
   open() {
-    this.ws = createWebSocket(this.url);
-    this.onStart(this.id);
+    this._ws = createWebSocket(this.url);
+    this._onStart.forEach(fn => fn({ws: this._ws, id: this.id, name: this.name}));
 
-    this.ws.onopen = () => {
-      log.info('WebSocket opened to ', this.url);
-      this.onOpened({ws: this.ws, id: this.id, name: this.name});
+    this._ws.onopen = () => {
+      log.info(`WebSocket ${this.name} opened to ${this.url}`);
+      this._onOpened.forEach(fn => fn({ws: this._ws, id: this.id, name: this.name}));
     };
-    this.ws.onerror = (e) => {
-      log.error('WebSocket error', e);
-      this.onError({ws: this.ws, id: this.id, name: this.name, error: e});
+    this._ws.onerror = (e) => {
+      log.error(`WebSocket ${this.name} error`, e);
+      this._onError.forEach(fn => fn({ws: this._ws, id: this.id, name: this.name, error: e}));
     };
-    this.ws.onclose = () => {
-      log.info('WebSocket closed');
-      this.onClose({ws: this.ws, id: this.id, name: this.name});
+    this._ws.onclose = () => {
+      log.info(`WebSocket ${this.name} closed`);
+      this._onClose.forEach(fn => fn({ws: this._ws, id: this.id, name: this.name}));
     };
 
-    this.ws.onmessage = (e) => {
+    this._ws.onmessage = (e) => {
       try {
         var msg = JSON.parse(e.data);
-        this.onMsg({msg, id: this.id});
+        this._onMsg.forEach(fn => fn({ws: this._ws, id: this.id, name: this.name, msg}));
       } catch(e) {
         log.error('Got bad data from WebSocket', e);
-        this.ws.close();
+        this._ws.close();
       }
     };
     return this;
@@ -66,8 +123,8 @@ class WebSocketService {
    * Close the web socket
    */
   close() {
-    if(this.ws) {
-      this.ws.close();
+    if(this._ws) {
+      this._ws.close();
     }
   }
 }

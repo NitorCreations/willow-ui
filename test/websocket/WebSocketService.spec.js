@@ -22,14 +22,14 @@ describe('WebSocketService', () => {
 
   describe('when created with minimal params', () => {
     beforeEach(() => {
-      service = new WebSocketService({url: 'url'});
+      service = new WebSocketService('url');
     });
     it('should set the callbacks to noop', () => {
-      expect(service.onClose).to.equal(noop);
-      expect(service.onError).to.equal(noop);
-      expect(service.onMsg).to.equal(noop);
-      expect(service.onOpened).to.equal(noop);
-      expect(service.onStart).to.equal(noop);
+      expect(service._onClose).to.be.empty;
+      expect(service._onError).to.be.empty;
+      expect(service._onMsg).to.be.empty;
+      expect(service._onOpened).to.be.empty;
+      expect(service._onStart).to.be.empty;
     });
 
     it('should set name, url, and uuid', () => {
@@ -48,29 +48,27 @@ describe('WebSocketService', () => {
       onMsg = sinon.stub();
       onOpened = sinon.stub();
       onStart = sinon.stub();
-      service = new WebSocketService({
-        name: 'test-ws',
-        url,
-        onClose,
-        onError,
-        onMsg,
-        onOpened,
-        onStart
-      });
+      service = new WebSocketService(url, 'test-ws')
+          .onClose(onClose).onError(onError).onMsg(onMsg).onStart(onStart)
+          .onOpened(onOpened);
     });
 
     it('should have set the callbacks to params', () => {
-      expect(service.onClose).to.equal(onClose);
-      expect(service.onError).to.equal(onError);
-      expect(service.onMsg).to.equal(onMsg);
-      expect(service.onOpened).to.equal(onOpened);
-      expect(service.onStart).to.equal(onStart);
+      expect(service._onClose).to.have.members([onClose]);
+      expect(service._onError).to.have.members([onError]);
+      expect(service._onMsg).to.have.members([onMsg]);
+      expect(service._onOpened).to.have.members([onOpened]);
+      expect(service._onStart).to.have.members([onStart]);
     });
 
     describe('after #open is called', () => {
       beforeEach(() => service.open());
       it('should call onStart', () => {
-        expect(onStart).to.have.been.called;
+        expect(onStart).to.have.been.calledWith({
+          name: service.name,
+          id: service.id,
+          ws
+        });
       });
       it('should pass the url to the web socket', () => {
         expect(ws.url).to.equal('ws://localhost:12345');
@@ -121,7 +119,7 @@ describe('WebSocketService', () => {
         });
 
         it('should parse the json and call onMsg', () => {
-          expect(onMsg).to.have.been.calledWith({msg: msg, id: service.id});
+          expect(onMsg).to.have.been.calledWith({ws: ws, msg: msg, id: service.id, name: service.name});
         });
       });
 
