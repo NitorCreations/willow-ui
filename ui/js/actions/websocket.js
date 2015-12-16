@@ -5,47 +5,30 @@ export function createWebsocket(instance) {
   };
 }
 
-export function connecting(id) {
+export function connecting(instance) {
   return {
     type: 'WEBSOCKET_CONNECTING',
-    payload: { id, }
+    payload: { instance, }
   };
 }
 
-export function closed(id) {
+export function closed(instance) {
   return {
     type: 'WEBSOCKET_CLOSED',
-    payload: { id, }
+    payload: { instance, }
   };
 }
 
-export function opened(websocket, id) {
-  websocket.send(JSON.stringify({
-    id:"24ceec8d-ffd8-4263-8672-08b925d7a7df",
-    metricKey:"/heap",
-    start:1448619082719,
-    //stop:1448629882719,
-    step:10000,
-    minSteps:10,
-
-    tags:["host_vempele.local"]
-  }));
+export function opened(instance) {
   return {
     type: 'WEBSOCKET_OPENED',
-    payload: { id, }
+    payload: { instance, }
   };
 }
 
-export function error(id) {
+export function error(instance) {
   return {
     type: 'WEBSOCKET_ERROR',
-    payload: { id, }
-  };
-}
-
-export function messageReceived(id, msg) {
-  return {
-    type: 'WEBSOCKET_MESSAGE',
-    payload: { msg, id, }
+    payload: { instance, }
   };
 }
