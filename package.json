@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node server.js",
-    "test": "BABEL_ENV=test mocha --compilers js:babel-core/register  --require ./test/test_helper.js  --recursive"
+    "test": "BABEL_ENV=test ./node_modules/.bin/_mocha --compilers js:babel-core/register  --require ./test/test_helper.js  --recursive"
   },
   "repository": {
     "type": "git",
