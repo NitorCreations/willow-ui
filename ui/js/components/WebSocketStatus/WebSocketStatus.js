@@ -9,16 +9,24 @@ class WebSocketStatus extends PureComponent {
   }
 
   render() {
-    return (
-      <div>WebSocket status: <strong>
-        {this.props.websocket.get('state')}
-        {" "}
-        {this.props.websocket.get('messages').count()}
-      </strong></div>
+    var rows = [];
+    this.props.websockets.forEach(ws => {
+      var key = ws.getIn(['instance','id']);
+      var name = ws.getIn(['instance','name']);
+      var state = ws.get('state');
+      rows.push(<li key={key}>
+        <span>'{name}' state: <strong>{state}</strong></span>
+      </li>);
+    });
+
+    return (<div name="websockets">
+          <h3>Web sockets:</h3>
+          <ul>{rows}</ul>
+      </div>
     )
   }
 }
 
 export default connect( state => {
-  return { websocket: state.get('websockets').get('poller') }
+  return { websockets: state.get('websockets') }
 } ) (WebSocketStatus)
