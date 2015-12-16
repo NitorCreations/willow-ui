@@ -1,11 +1,12 @@
 import Immutable from 'immutable';
 import * as log from '../util/log';
+import {WebSocketActions} from './WebSocketActions';
 
 const initialState = Immutable.fromJS({});
 
 export function websockets(state = initialState, action) {
   switch (action.type) {
-    case 'WEBSOCKET_CREATED':
+    case WebSocketActions.WEBSOCKET_CREATED:
       return state.updateIn([action.payload.instance.name], () => {
         return Immutable.fromJS({
           instance: action.payload.instance,
@@ -13,16 +14,16 @@ export function websockets(state = initialState, action) {
         })
       });
 
-    case 'WEBSOCKET_CONNECTING':
+    case WebSocketActions.WEBSOCKET_CONNECTING:
       return state.updateIn([action.payload.instance.name, 'state'], () => 'connecting');
 
-    case 'WEBSOCKET_OPENED':
+    case WebSocketActions.WEBSOCKET_OPENED:
       return state.updateIn([action.payload.instance.name, 'state'], () => 'open');
 
-    case 'WEBSOCKET_CLOSED':
+    case WebSocketActions.WEBSOCKET_CLOSED:
       return state.updateIn([action.payload.instance.name, 'state'], () => 'closed');
 
-    case 'WEBSOCKET_ERROR':
+    case WebSocketActions.WEBSOCKET_ERROR:
       return state.updateIn([action.payload.instance.name, 'state'], () => 'error');
   }
   return state
