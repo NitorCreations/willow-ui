@@ -1,5 +1,5 @@
 
-import {createWebsocket, connecting, opened, closed, error} from '../actions/websocket';
+import {createWebsocket, connecting, opened, closed, error} from './WebSocketActions';
 import WebSocketService from './WebSocketService';
 
 /**
