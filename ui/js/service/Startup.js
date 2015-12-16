@@ -1,6 +1,6 @@
 import { bindActionCreators } from 'redux';
 import * as actionCreators from 'actions/counters';
-import WebSocketService from 'service/WebSocketService'
+import WebSocketService from '../websocket/WebSocketService'
 
 export default function startup(dispatch) {
     const actions = bindActionCreators(actionCreators, dispatch);

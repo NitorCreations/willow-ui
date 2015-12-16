@@ -1,6 +1,6 @@
 import {expect} from 'chai';
 import * as sinon from 'sinon';
-import WebSocketService from '../../ui/js/service/WebSocketService';
+import WebSocketService from '../../ui/js/websocket/WebSocketService';
 import {noop} from '../../ui/js/util/util';
 
 import {MockLog, WebSocketMock} from '../mocks';
