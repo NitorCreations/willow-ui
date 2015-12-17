@@ -2,7 +2,7 @@ import * as log from '../util/log'
 import createUuid from '../util/uuid'
 import {noop} from '../util/util';
 import {createWebSocket} from './WebSocketProvider'
-
+import {WebSocketStates} from './constants';
 /**
  * Handles the creation, closing, and message traffic for web sockets.
  *
@@ -24,11 +24,15 @@ class WebSocketService {
     this.id = createUuid();
     this.name = name || `socket ${this.id}`;
     this.url = url;
+
     this._onClose = [];
     this._onError = [];
     this._onMsg = [];
     this._onOpened = [];
     this._onStart = [];
+
+    this._queue = [];
+    this.onOpened(() => this._queue.forEach(msg => this.send(msg)));
   }
 
   /**
@@ -116,6 +120,23 @@ class WebSocketService {
         this._ws.close();
       }
     };
+    return this;
+  }
+
+  /**
+   * Converts the message object to a JSON string and sends it through the web socket.
+   * Note: will queue the message if the web socket is not yet open. Therefore, it is safe
+   * to call this method even if the socket is still connecting.
+   *
+   * @param msg the message to send
+   * @return {WebSocketService} this for chaining
+   */
+  send(msg) {
+    if (this._ws && this._ws.readyState === WebSocketStates.OPEN) {
+      this._ws.send(JSON.stringify(msg));
+    } else {
+      this._queue.push(msg);
+    }
     return this;
   }
 

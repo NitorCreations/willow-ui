@@ -24,13 +24,6 @@ describe('WebSocketService', () => {
     beforeEach(() => {
       service = new WebSocketService('url');
     });
-    it('should set the callbacks to noop', () => {
-      expect(service._onClose).to.be.empty;
-      expect(service._onError).to.be.empty;
-      expect(service._onMsg).to.be.empty;
-      expect(service._onOpened).to.be.empty;
-      expect(service._onStart).to.be.empty;
-    });
 
     it('should set name, url, and uuid', () => {
       expect(service.id).to.be.ok;
@@ -57,8 +50,37 @@ describe('WebSocketService', () => {
       expect(service._onClose).to.have.members([onClose]);
       expect(service._onError).to.have.members([onError]);
       expect(service._onMsg).to.have.members([onMsg]);
-      expect(service._onOpened).to.have.members([onOpened]);
+      expect(service._onOpened).to.contain(onOpened);
       expect(service._onStart).to.have.members([onStart]);
+    });
+
+    describe('when sending message before open', () => {
+      const testData = { here: { be: 'dragons' }};
+      beforeEach(() => {
+        service.send(testData);
+        service.open();
+      });
+
+      it('should not call ws.send before socket is open', () => {
+        expect(ws.send).not.to.have.been.called;
+      });
+
+      describe('when the socket is opened', () => {
+        beforeEach(() => ws.t_open());
+
+        it('should immediately send the messages', () => {
+          expect(ws.send).to.have.been.calledWith(JSON.stringify(testData));
+        });
+      });
+
+      describe('when the socket is closed', () => {
+        beforeEach(() => ws.t_close());
+
+        it('should not send any more messages', () => {
+          service.send(testData).send(testData).send(testData);
+          expect(ws.send).not.to.have.been.called;
+        });
+      });
     });
 
     describe('after #open is called', () => {
@@ -82,6 +104,15 @@ describe('WebSocketService', () => {
              name: service.name,
              ws
            });
+        });
+      });
+
+      describe('when sending message', () => {
+        const testData = { my: { data: 'ishere' }};
+        beforeEach(() => { ws.t_open(); service.send(testData); });
+
+        it('should send the data to the web socket', () => {
+          expect(ws.send).to.have.been.calledWith(JSON.stringify(testData));
         });
       });
 
