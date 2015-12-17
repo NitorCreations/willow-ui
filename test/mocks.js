@@ -13,6 +13,7 @@ export class WebSocketMock {
   constructor(url) {
     this.url = url;
     this.send = sinon.stub();
+    this.close = sinon.stub().throws('Close called unexpectedly');
     this.readyState = WebSocketStates.CONNECTING;
   }
 

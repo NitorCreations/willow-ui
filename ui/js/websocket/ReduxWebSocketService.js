@@ -15,6 +15,24 @@ class ReduxWebSocketService extends WebSocketService {
     this.onOpened(o => dispatch(opened(o)));
     this.onClose(o => dispatch(closed(o)));
     this.onError(o => dispatch(error(o)));
+    this._dispatch = dispatch;
+  }
+
+  /**
+   * Transform the received message to a redux action. The function should return a valid redux action or
+   * undefined to skip dispatching.
+   *
+   * @param fn the function to call on message.
+   * @returns {ReduxWebSocketService} this for chaining
+   */
+  onMsgDispatch(fn) {
+    this.onMsg(({msg}) => {
+      var action = fn(msg);
+      if (typeof action !== 'undefined') {
+        this._dispatch(action)
+      }
+    });
+    return this;
   }
 }
 

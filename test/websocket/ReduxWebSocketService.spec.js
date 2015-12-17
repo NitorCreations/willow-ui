@@ -61,6 +61,45 @@ describe('WebSocketService', () => {
         expect(store.getState()).to.include('WEBSOCKET_CLOSED');
       });
     });
+
+    describe('when receiving message', () => {
+
+      describe('and onMsgDispatch returns an action', () => {
+        beforeEach(() => {
+          var s = service.onMsgDispatch((msg) => ({
+            type: 'WEBSOCKET_CUSTOM',
+            payload: msg.data
+          }));
+          // Returns this
+          expect(s).to.equal(service);
+
+          ws.t_msg({
+            data: JSON.stringify({msg: 'Hello Willow!'})
+          });
+        });
+
+        it('should dispatch the event', () => {
+          expect(store.getState()).to.include('WEBSOCKET_CUSTOM');
+        });
+      });
+
+      describe('and onMsgDispatch returns undefined', () => {
+        var subscribe;
+        beforeEach(() => {
+          subscribe = sinon.stub();
+          store.subscribe(subscribe);
+          service.onMsgDispatch(msg => undefined);
+          ws.t_msg({
+            data: JSON.stringify({msg: 'Hello Willow!'})
+          });
+        });
+
+        it('should not dispatch', () => {
+          expect(subscribe).not.to.have.been.called;
+        });
+      });
+
+    });
   });
 
 });
