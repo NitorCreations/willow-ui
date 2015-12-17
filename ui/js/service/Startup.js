@@ -1,6 +1,6 @@
 import { bindActionCreators } from 'redux';
 import ReduxWebSocketService from '../websocket/ReduxWebSocketService'
-
+import { setHosts } from '../hosts/HostActions';
 const url = 'ws://localhost:5120/poll/';
 
 export default function startup(dispatch) {
@@ -15,9 +15,7 @@ export default function startup(dispatch) {
                 tags: []
             }));
         })
-        .onMsg(({msg}) => {
-            console.log('Got hosts: ', msg.data);
-        })
+        .onMsg(({msg}) => dispatch(setHosts(msg.data)))
         .open();
 
 }

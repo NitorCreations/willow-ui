@@ -3,6 +3,7 @@ import Immutable from 'immutable';
 
 import { counters } from './counters'
 import { websockets } from '../websocket/WebSocketReducer'
+import { hosts } from '../hosts/HostReducer';
 
 const { routeReducer } = require('redux-simple-router');
 
@@ -23,6 +24,7 @@ function immutableConverter(reducer) {
 const rootReducer = combineReducers({
     counters,
     websockets,
+    hosts,
     routing: immutableConverter(routeReducer)
 });
 
