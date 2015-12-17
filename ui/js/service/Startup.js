@@ -14,7 +14,6 @@ export default function startup(dispatch) {
           minSteps: 10,
           tags: []
         })
-        .onMsg(({msg}) => dispatch(setHosts(msg.data)))
+        .onMsgDispatch(msg => setHosts(msg.data))
         .open();
-
 }
