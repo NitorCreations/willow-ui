@@ -1,4 +1,4 @@
-Willow UI
+Willow UI [![Build Status](https://travis-ci.org/NitorCreations/willow-ui.svg)](https://travis-ci.org/NitorCreations/willow-ui)
 =========
 
 Client for Willow cloud management and monitoring.
