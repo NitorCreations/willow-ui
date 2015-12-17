@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { CounterButton, WebSocketStatus } from 'components'
+import { CounterButton, WebSocketStatus, HostDisplay } from 'components'
 require('./Home.scss')
 export default class Home extends Component {
     render() {
@@ -11,6 +11,7 @@ export default class Home extends Component {
                 <p>Debug panel on right shows state and history of Redux store. Ctrl-H hides the debug panel.</p>
 
                 <CounterButton name="Foobar counter"/>
+                <HostDisplay />
                 <WebSocketStatus/>
             </div>
         )
