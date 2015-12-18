@@ -1,4 +1,4 @@
-
+/*eslint no-console:0*/
 //
 // LOGGING HELPERS
 // Makes it easier to disable certain log levels afterwards.

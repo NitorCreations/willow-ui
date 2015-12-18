@@ -5,7 +5,7 @@ import { counters } from './counters';
 import { websockets } from '../websocket/WebSocketReducer';
 import { hosts } from '../hosts/HostReducer';
 
-const { routeReducer } = require('redux-simple-router');
+import { routeReducer } from 'redux-simple-router';
 
 // routeReducer assumes that store is plain js object
 // immutableConverter converts Immutable object to and back plain js object

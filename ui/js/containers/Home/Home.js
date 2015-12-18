@@ -1,6 +1,6 @@
-import React, { Component, PropTypes } from 'react';
+import { Component } from 'react';
 import { CounterButton, WebSocketStatus, HostDisplay } from 'components';
-require('./Home.scss');
+import './Home.scss';
 export default class Home extends Component {
     render() {
       return (
