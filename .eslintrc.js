@@ -19,7 +19,8 @@ module.exports = {
       "always"
     ],
     "no-irregular-whitespace": 1,
-    "no-unused-vars": 1
+    "no-unused-vars": 1,
+    "comma-dangle": 0
   },
   "env": {
     "es6": true,
