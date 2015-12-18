@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react';
 
 export default class Shell extends Component {
   render() {
@@ -6,6 +6,6 @@ export default class Shell extends Component {
         <div>
           <h2>Here be shell terminal</h2>
         </div>
-    )
+    );
   }
 }

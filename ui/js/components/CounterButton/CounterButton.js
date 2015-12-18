@@ -10,25 +10,25 @@ import * as actionCreators from 'actions/counters';
 
 class CounterButton extends PureComponent {
     static propTypes = {
-        name: React.PropTypes.string,
+      name: React.PropTypes.string,
     }
     constructor(props) {
-        super(props);
-        this.actions = bindActionCreators(actionCreators, this.props.dispatch);
+      super(props);
+      this.actions = bindActionCreators(actionCreators, this.props.dispatch);
     }
 
     _increment() {
-        this.actions.increment(this.props.name)
+      this.actions.increment(this.props.name);
     }
 
     render() {
-        var counter = this.props.counters.get(this.props.name) || 0
-        return (
+      var counter = this.props.counters.get(this.props.name) || 0;
+      return (
             <button onClick={() => this._increment()}>{this.props.name} {counter}</button>
-        )
+        );
     }
 }
 // TODO workaround for decorators
 export default connect( state => {
-    return {counters: state.get('counters')}
-} ) (CounterButton)
+  return {counters: state.get('counters')};
+} ) (CounterButton);

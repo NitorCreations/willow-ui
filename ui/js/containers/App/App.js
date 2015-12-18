@@ -3,11 +3,11 @@ import { Link } from 'react-router';
 
 export default class App extends Component {
     static propTypes = {
-        children: React.PropTypes.any,
+      children: React.PropTypes.any,
     }
 
     render() {
-        return (
+      return (
             <div>
                 <h1 className="title">Hello from App.js</h1>
                 <ul>
@@ -19,7 +19,7 @@ export default class App extends Component {
                 </main>
 
             </div>
-        )
+        );
     }
 }
 

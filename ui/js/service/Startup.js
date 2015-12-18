@@ -1,11 +1,11 @@
 import { bindActionCreators } from 'redux';
-import ReduxWebSocketService from '../websocket/ReduxWebSocketService'
+import ReduxWebSocketService from '../websocket/ReduxWebSocketService';
 import { setHosts } from '../hosts/HostActions';
 import createUuid from '../util/uuid';
 const url = 'ws://localhost:5120/poll/';
 
 export default function startup(dispatch) {
-    new ReduxWebSocketService(url, 'hosts', dispatch)
+  new ReduxWebSocketService(url, 'hosts', dispatch)
         .send({
           id: createUuid(),
           metricKey: '/hosts',
