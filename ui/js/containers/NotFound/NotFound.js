@@ -1,11 +1,11 @@
 import React, { Component, PropTypes } from 'react';
 export default class NotFound extends Component {
     render() {
-        return (
+      return (
             <div>
                 <h2>Dude!</h2>
                 <strong>This page doesn't exist!</strong>
             </div>
-        )
+        );
     }
 }

@@ -20,14 +20,14 @@ const finalCreateStore = compose(
 )(createStore);
 
 export default function configureStore(initialState) {
-    const store = finalCreateStore(rootReducer, initialState);
+  const store = finalCreateStore(rootReducer, initialState);
 
-    if (module.hot) {
+  if (module.hot) {
         // Enable Webpack hot module replacement for reducers
-        module.hot.accept('../reducers', () => {
-            const nextRootReducer = require('../reducers/index');
-            store.replaceReducer(nextRootReducer);
-        });
-    }
-    return store;
+    module.hot.accept('../reducers', () => {
+        const nextRootReducer = require('../reducers/index');
+        store.replaceReducer(nextRootReducer);
+      });
+  }
+  return store;
 }

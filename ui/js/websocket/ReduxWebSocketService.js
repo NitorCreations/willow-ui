@@ -29,11 +29,11 @@ class ReduxWebSocketService extends WebSocketService {
     this.onMsg(({msg}) => {
       var action = fn(msg);
       if (typeof action !== 'undefined') {
-        this._dispatch(action)
+        this._dispatch(action);
       }
     });
     return this;
   }
 }
 
-export default ReduxWebSocketService
+export default ReduxWebSocketService;

@@ -12,4 +12,4 @@ export default function addMatchers(chai) {
 
     this.assert(match, msg, notMsg, 'a string matching ' + regex, obj);
   });
-};
+}

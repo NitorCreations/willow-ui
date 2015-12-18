@@ -23,10 +23,10 @@ class WebSocketStatus extends PureComponent {
           <h3>Web sockets:</h3>
           <ul>{rows}</ul>
       </div>
-    )
+    );
   }
 }
 
 export default connect( state => {
-  return { websockets: state.get('websockets') }
-} ) (WebSocketStatus)
+  return { websockets: state.get('websockets') };
+} ) (WebSocketStatus);

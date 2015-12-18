@@ -17,10 +17,10 @@ class HostDisplay extends PureComponent {
           <h3>Connected hosts:</h3>
           <ul>{rows}</ul>
         </div>
-    )
+    );
   }
 }
 
 export default connect( state => {
-  return { hosts: state.get('hosts') }
-} ) (HostDisplay)
+  return { hosts: state.get('hosts') };
+} ) (HostDisplay);

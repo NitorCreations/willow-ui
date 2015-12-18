@@ -99,11 +99,11 @@ describe('WebSocketService', () => {
       describe('when opened', () => {
         beforeEach(() => ws.t_open());
         it('should call onOpened', () => {
-           expect(onOpened).to.have.been.calledWith({
-             id: service.id,
-             name: service.name,
-             ws
-           });
+          expect(onOpened).to.have.been.calledWith({
+            id: service.id,
+            name: service.name,
+            ws
+          });
         });
       });
 

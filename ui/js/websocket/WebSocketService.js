@@ -1,7 +1,7 @@
-import * as log from '../util/log'
-import createUuid from '../util/uuid'
+import * as log from '../util/log';
+import createUuid from '../util/uuid';
 import {noop} from '../util/util';
-import {createWebSocket} from './WebSocketProvider'
+import {createWebSocket} from './WebSocketProvider';
 import {WebSocketStates} from './constants';
 /**
  * Handles the creation, closing, and message traffic for web sockets.
@@ -150,4 +150,4 @@ class WebSocketService {
   }
 }
 
-export default WebSocketService
+export default WebSocketService;

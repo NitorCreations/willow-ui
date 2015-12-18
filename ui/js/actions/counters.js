@@ -1,8 +1,8 @@
 export function increment(name) {
-    return {
-        type: 'INCREMENT',
-        payload: {
-            name,
-        }
-    };
+  return {
+    type: 'INCREMENT',
+    payload: {
+      name,
+    }
+  };
 }

@@ -1,9 +1,9 @@
 import React, { Component, PropTypes } from 'react';
-import { CounterButton, WebSocketStatus, HostDisplay } from 'components'
-require('./Home.scss')
+import { CounterButton, WebSocketStatus, HostDisplay } from 'components';
+require('./Home.scss');
 export default class Home extends Component {
     render() {
-        return (
+      return (
             <div>
                 <h2 className="title">Hello from Home.js</h2>
                 <span>If you modify me browser automatically updates</span>
@@ -14,7 +14,7 @@ export default class Home extends Component {
                 <HostDisplay />
                 <WebSocketStatus/>
             </div>
-        )
+        );
     }
 }
 
