@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node server.js",
     "test": "BABEL_ENV=test ./node_modules/.bin/_mocha --compilers js:babel-core/register  --require ./test/test_helper.js  --recursive",
-    "lint": "./node_modules/.bin/eslint ui/js test",
+    "lint": "./node_modules/.bin/eslint --max-warnings 100 ui/js test",
     "lint-fix": "./node_modules/.bin/eslint --fix ui/js test"
   },
   "repository": {
