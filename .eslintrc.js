@@ -19,7 +19,7 @@ module.exports = {
       "always"
     ],
     "no-irregular-whitespace": 1,
-    "no-unused-vars": 1,
+    "no-unused-vars": [1, {"varsIgnorePattern": "React"}],
     "comma-dangle": 0
   },
   "env": {
