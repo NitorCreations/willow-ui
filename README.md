@@ -21,7 +21,7 @@ $ npm install
 Start Willow server
 
 ```
-$ sh start-willow.sh
+$ sh backend-dev-server/start-willow.sh
 ```
 
 Check that willow server works:

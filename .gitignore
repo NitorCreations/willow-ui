@@ -42,8 +42,9 @@ npm-debug.log
 # Compiled app
 build/
 
-willow-servers-*.jar
-deployer.sh
-application.properties
-data/
-lib/
+# Backend dev server
+backend-dev-server/*.jar
+backend-dev-server/deployer.sh
+backend-dev-server/data/
+backend-dev-server/lib/
+/backend-dev-server/application.properties
