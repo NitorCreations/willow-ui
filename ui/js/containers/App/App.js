@@ -3,8 +3,8 @@ import { Link } from 'react-router';
 
 export default class App extends Component {
     static propTypes = {
-      children: React.PropTypes.any,
-    }
+      children: React.PropTypes.any
+    };
 
     render() {
       return (
