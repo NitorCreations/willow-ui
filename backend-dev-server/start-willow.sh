@@ -1,5 +1,6 @@
 #!/bin/sh
-cd $(dirname $(readlink -f $0))
+cd $(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+echo "starting willow with root of " `pwd`
 
 if [ -z "$ARTIFACT_SERVICE_URL" ]; then
     ARTIFACT_SERVICE_URL="https://oss.sonatype.org/service/local/artifact/maven/redirect"
