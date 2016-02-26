@@ -14,7 +14,7 @@ app.use(require('morgan')('short'));
     }));
 
     app.use(require('webpack-hot-middleware')(compiler, {
-        log: console.log, path: '/__webpack_hmr', heartbeat: 10 * 1000
+        log: console.log, path: '/ui/__webpack_hmr', heartbeat: 10 * 1000
     }));
 
     app.use(express.static(__dirname + '/'));
@@ -29,8 +29,9 @@ app.get('*', function root(req, res) {
 if (require.main === module) {
     var server = http.createServer(app);
     server.listen(process.env.PORT || 3000, function onListen() {
-        var address = server.address();
-        console.log('Listening on: %j', address);
-        console.log(' -> that probably means: http://localhost:%d', address.port);
+      var address = server.address();
+      console.log('Listening on: %j', address);
+      console.log(' -> that probably means: http://localhost:' + address.port + '/ui/');
+      console.log('You should use http://localhost:5120/ui/');
     });
 }

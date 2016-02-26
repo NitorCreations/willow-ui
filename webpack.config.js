@@ -6,12 +6,12 @@ require('es6-promise').polyfill();
 
 module.exports = {
     entry: [
-        'webpack-hot-middleware/client', // WebpackDevServer host and port
+        'webpack-hot-middleware/client?path=/ui/__webpack_hmr', // WebpackDevServer host and port
         'babel-polyfill',
         './ui/js/willow-main'
     ],
     output: {
-        publicPath: '/',
+        publicPath: '/ui/',
         path: path.join(__dirname, '/dist/js'),
         filename: 'willow-main.js'
     },

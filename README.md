@@ -32,9 +32,9 @@ Open development environment
 $ npm run start
 ```
 
-Point your browser to willow-ui at http://localhost:3000 => you'll get the new version of Willow's user interface.
+Point your browser to willow-ui at http://localhost:3000/ui => you'll get the new version of Willow's user interface.
 
-To authenticate you need to access http://localhost:5120 and use account `admin/admin`.
+In normally you should use user interface via http://localhost:5120/ui. That address proxies traffic to http://localhost:3000/ui.
 
 ## Authorization
 

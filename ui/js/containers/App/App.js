@@ -11,8 +11,8 @@ export default class App extends Component {
             <div>
                 <h1 className="title">Hello from App.js</h1>
                 <ul>
-                    <li><Link to="/">Frontpage</Link></li>
-                    <li><Link to="Shell">Shell</Link></li>
+                    <li><Link to="/ui/">Frontpage</Link></li>
+                    <li><Link to="/ui/Shell">Shell</Link></li>
                 </ul>
                 <main className="container">
                     {this.props.children}
