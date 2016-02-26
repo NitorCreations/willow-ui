@@ -10,8 +10,8 @@ import * as actionCreators from 'actions/counters';
 
 class CounterButton extends PureComponent {
     static propTypes = {
-      name: React.PropTypes.string,
-    }
+      name: React.PropTypes.string
+    };
     constructor(props) {
       super(props);
       this.actions = bindActionCreators(actionCreators, this.props.dispatch);
