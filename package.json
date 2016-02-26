@@ -45,6 +45,7 @@
   "dependencies": {
     "babel-polyfill": "6.5.0",
     "babel-runtime": "6.5.0",
+    "es6-promise": "3.1.2",
     "history": "1.13.1",
     "immutable": "3.7.6",
     "material-design-lite": "1.1.1",
@@ -57,7 +58,8 @@
     "redux-immutablejs": "0.0.8",
     "redux-logger": "2.0.4",
     "redux-simple-router": "0.0.8",
-    "redux-thunk": "1.0.3"
+    "redux-thunk": "1.0.3",
+    "whatwg-fetch": "^0.11.0"
   },
   "devDependencies": {
     "autoprefixer-loader": "3.2.0",
@@ -75,10 +77,10 @@
     "chai-immutable": "1.5.3",
     "css-loader": "0.23.1",
     "del": "2.2.0",
-    "es6-promise": "3.1.2",
     "eslint": "1.10.3",
     "eslint-plugin-react": "3.11.3",
     "esprima-fb": "15001.1001.0-dev-harmony-fb",
+    "exports-loader": "^0.6.3",
     "express": "4.13.4",
     "jsdom": "8.0.4",
     "jshint-stylish": "2.1.0",
