@@ -90,6 +90,24 @@ class WebSocketService {
   }
 
   /**
+   * Default method for deserialize data into websocket channel.
+   * @param data message that client sends to websocket.
+   * @return deserialized data
+   */
+  deSerializeData(data) {
+    return JSON.parse(data);
+  }
+
+  /**
+   * Default method for serialize data from websocket channel.
+   * @param data message which client receives.
+   * @return serialized data
+   */
+  serializeData(data) {
+    return JSON.stringify(data);
+  }
+
+  /**
    * Open the web socket and bind event handlers
    * @returns {WebSocketService} this for chaining
    */
@@ -112,10 +130,10 @@ class WebSocketService {
 
     this._ws.onmessage = (e) => {
       try {
-        var msg = JSON.parse(e.data);
+        var msg = this.deSerializeData(e.data);
         this._onMsg.forEach(fn => fn({ws: this._ws, id: this.id, name: this.name, msg}));
-      } catch(e) {
-        log.error('Got bad data from WebSocket', e);
+      } catch(err) {
+        log.error('Got bad data from WebSocket', err);
         this._ws.close();
       }
     };
@@ -132,7 +150,7 @@ class WebSocketService {
    */
   send(msg) {
     if (this._ws && this._ws.readyState === WebSocketStates.OPEN) {
-      this._ws.send(JSON.stringify(msg));
+      this._ws.send(this.serializeData(msg));
     } else {
       this._queue.push(msg);
     }

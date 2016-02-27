@@ -34,6 +34,16 @@ class ReduxWebSocketService extends WebSocketService {
     });
     return this;
   }
+
+  withRawData() {
+    this.deSerializeData = data => {
+      return data
+    };
+    this.serializeData = data => {
+      return data
+    };
+    return this;
+  }
 }
 
 export default ReduxWebSocketService;

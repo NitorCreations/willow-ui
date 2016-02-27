@@ -1,12 +1,9 @@
 import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
 import Terminal from 'term.js';
 
-//FIXME sami-airaksinen 11/27/15 : sockect heart beat
-/*
- window.setInterval(function() {
- window.socket.send("{\"ping\":1}");
- }, 2000);
- */
+import ReduxWebSocketService from 'websocket/ReduxWebSocketService';
+import createUuid from 'util/uuid';
 
 //FIXME sami-airaksinen 11/27/15 : responsiveness
 /*
@@ -22,98 +19,113 @@ class ShellTerminal extends Component {
 
   constructor(props) {
     super(props);
+
     var term = new Terminal({
-      cols: 100,
-      rows: 40,
+      cols: this.props.nCols,
+      rows: this.props.nRows,
       screenKeys: true,
       cursorBlink: true,
       useStyles: true
     });
+
+    term.on('title', title => {
+      document.title = title;
+    });
+
+    var socket = new ReduxWebSocketService(this.props.uri, this.props.webSocketId, this.props.dispatch)
+      .withRawData()
+      .onMsg(data => {
+        term.write(data.msg)
+      })
+      .onClose(() => {
+        term.destroy()
+      })
+      .open();
+
+    term.on('data', data => {
+      socket.send(data);
+    });
+
     this.state = { terminal: term };
   }
 
   render() {
     return (
-        <div>
-          <h2>Here be shell terminal</h2>
-          <div id="terminal-screen"></div>
-        </div>
+      <div id="terminal-screen"></div>
     );
   }
 
-  componentWillUpdate() {
-
-  }
-
   componentDidMount() {
-    var term = new Terminal({
-      cols: 100,
-      rows: 40,
-      screenKeys: true,
-      cursorBlink: true,
-      useStyles: true
-    });
-    term.open(document.getElementById("terminal-screen"));
-    term.on('title', function(title) {
-      document.title = title;
-    });
-    term.write('foobar testing');
-    this.setState({ terminal: term });
+    this.state.terminal.open(document.getElementById("terminal-screen"));
+    this.state.terminal.write('foobar testing');
+
+    /*//fixme do it better
+     window.setInterval(function() {
+     this.props.socket.send(JSON.stringify({ ping: 1 }));
+     }, 2000);*/
   }
 }
 
-export default class Shell extends Component {
+const ShellTerminalConnect = connect( (state, componentProperties) => {
+  return {
+    componentProperties,
+  }
+}) (ShellTerminal);
+
+class Shell extends Component {
+
+  constructor(props) {
+    super(props);
+    var webSocketId = 'host_draco';
+    var nCols = 200; //parseInt(20 * $(window).width() / "0123456789ABCDEFGHIJK".width());
+    var nRows = 120; //parseInt($(window).height() / "0123456789ABCDEFGHIJK".height());
+    var terminalWebSocketUri = resolveWebsocketUri(nCols, nRows);
+
+    this.state = {
+      webSocketId: webSocketId,
+      uri: terminalWebSocketUri,
+      nCols: nCols,
+      nRows: nRows
+    };
+  }
+
   render() {
+    var componentConfiguration = {
+      cols: this.state.nCols,
+      rows: this.state.nRows,
+      webSocketId: this.state.webSocketId,
+      uri: this.state.uri
+    };
+
     return (
       <div>
         <h2>Here be shell terminal</h2>
-        <ShellTerminal />
+        <ShellTerminalConnect {...componentConfiguration} />
       </div>
     )
   }
 }
 
-/*window.addEventListener('load', function() {
- var nCols = parseInt(20 * $(window).width() / "0123456789ABCDEFGHIJK".width());
- var nRows = parseInt($(window).height() / "0123456789ABCDEFGHIJK".height());
- var loc = window.location, ws_uri;
- if (loc.protocol === "https:") {
- ws_uri = "wss:";
- } else {
- ws_uri = "ws:";
- }
- var ctx = "/";
- var ctxEnd = loc.pathname.lastIndexOf("/");
- if (ctxEnd > 0) {
- if (loc.pathname.indexOf("/") === 0) {
- ctx = "";
- }
- ctx += loc.pathname.substring(0, contextEnd) + "/";
- }
- ws_uri += "//" + loc.host + ctx + "rawterminal/" + loc.search + "&cols=" + nCols + "&rows=" + nRows;
- var socket = new WebSocket(ws_uri);
- window.socket = socket;
- socket.onopen = function() {
- var term = new Terminal({
- cols: nCols,
- rows: nRows,
- screenKeys: true,
- cursorBlink: true,
- useStyles: true
- });
- term.on('data', function(data) {
- socket.send(data);
- });
- window.term = term;
- term.on('title', function(title) {
- document.title = title;
- });
- term.open(document.body);
- socket.onmessage = function(event) {
- term.write(event.data);
- };
- socket.onclose = function() {
- term.destroy();
- };
- };
- }, false);*/
+export default connect(state => {
+  return {}
+}) (Shell);
+
+function resolveWebsocketUri(nCols, nRows) {
+  var loc = window.location, ws_uri;
+  if (loc.protocol === "https:") {
+    ws_uri = "wss:";
+  } else {
+    ws_uri = "ws:";
+  }
+  var ctx = "/";
+  var ctxEnd = loc.pathname.lastIndexOf("/");
+  if (ctxEnd > 0) {
+    if (loc.pathname.indexOf("/") === 0) {
+      ctx = "";
+    }
+    ctx += loc.pathname.substring(0, ctxEnd) + "/";
+  }
+  ws_uri += "//" + loc.host + ctx + "rawterminal/" + loc.search + "&cols=" + nCols + "&rows=" + nRows;
+  ws_uri = "ws://localhost:5120/rawterminal/?user=@admin&host=draco&cols=105&rows=71";
+  return ws_uri;
+}
