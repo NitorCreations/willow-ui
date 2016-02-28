@@ -107,26 +107,20 @@ class Shell extends Component {
     super(props);
     var webSocketId = 'host_draco';
 
-    var fontSize = 12; //this value should match font-size defined in Shell.scss
-    var characterWidth = fontSize;
-    var characterHeight = fontSize;
-
-    var nCols = parseInt(window.innerWidth / characterWidth) - 5;
-    var nRows = parseInt(window.innerHeight / characterHeight) -5;
-    var terminalWebSocketUri = resolveWebsocketUri(nCols, nRows);
+    var rowsAndCols = calculateOptimalRowsAndCols();
+    var terminalWebSocketUri = resolveWebsocketUri(rowsAndCols.cols, rowsAndCols.rows);
 
     this.state = {
       webSocketId: webSocketId,
       uri: terminalWebSocketUri,
-      nCols: nCols,
-      nRows: nRows
+      rowsAndCols,
     };
   }
 
   render() {
     var componentConfiguration = {
-      cols: this.state.nCols,
-      rows: this.state.nRows,
+      cols: this.state.rowsAndCols.cols,
+      rows: this.state.rowsAndCols.rows,
       webSocketId: this.state.webSocketId,
       uri: this.state.uri
     };
@@ -162,4 +156,14 @@ function resolveWebsocketUri(nCols, nRows) {
   ws_uri += "//" + loc.host + ctx + "rawterminal/" + loc.search + "&cols=" + nCols + "&rows=" + nRows;
   ws_uri = "ws://localhost:5120/rawterminal/?user=@admin&host=draco&cols=105&rows=71";
   return ws_uri;
+}
+
+function calculateOptimalRowsAndCols() {
+  var fontSize = 12; //this value should match font-size defined in Shell.scss
+  var characterWidth = fontSize;
+  var characterHeight = fontSize;
+
+  var nCols = parseInt(window.innerWidth / characterWidth) - 5;
+  var nRows = parseInt(window.innerHeight / characterHeight) - 5;
+  return {cols: nCols, rows: nRows};
 }
