@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import Terminal from 'term.js';
+import './Shell.scss';
 
 import ReduxWebSocketService from 'websocket/ReduxWebSocketService';
 import createUuid from 'util/uuid';
@@ -21,8 +22,8 @@ class ShellTerminal extends Component {
     super(props);
 
     var term = new Terminal({
-      cols: this.props.nCols,
-      rows: this.props.nRows,
+      cols: this.props.cols,
+      rows: this.props.rows,
       screenKeys: true,
       cursorBlink: true,
       useStyles: true
@@ -57,7 +58,6 @@ class ShellTerminal extends Component {
 
   componentDidMount() {
     this.state.terminal.open(document.getElementById("terminal-screen"));
-    this.state.terminal.write('foobar testing');
 
     /*//fixme do it better
      window.setInterval(function() {
@@ -77,8 +77,13 @@ class Shell extends Component {
   constructor(props) {
     super(props);
     var webSocketId = 'host_draco';
-    var nCols = 200; //parseInt(20 * $(window).width() / "0123456789ABCDEFGHIJK".width());
-    var nRows = 120; //parseInt($(window).height() / "0123456789ABCDEFGHIJK".height());
+
+    var fontSize = 12; //this value should match font-size defined in Shell.scss
+    var characterWidth = fontSize;
+    var characterHeight = fontSize;
+
+    var nCols = parseInt(window.innerWidth / characterWidth) - 5;
+    var nRows = parseInt(window.innerHeight / characterHeight) -5;
     var terminalWebSocketUri = resolveWebsocketUri(nCols, nRows);
 
     this.state = {
@@ -99,7 +104,7 @@ class Shell extends Component {
 
     return (
       <div>
-        <h2>Here be shell terminal</h2>
+        <h2>terminal: {this.state.webSocketId}</h2>
         <ShellTerminalConnect {...componentConfiguration} />
       </div>
     )

@@ -1,6 +1,15 @@
-body {
-  font-family: "Lucida Console", Monaco, monospace
+@font-face {
+  font-family: 'Terminal Fonts';
+  font-style: normal;
+  font-weight: normal;
+  src: local("Anonymous Pro"), local("Anonymous Pro-Regular"), url(../../../fonts/Anonymous-Pro.woff) format('woff')
 }
+
+.terminal {
+  font-family: "Terminal Fonts", Fallback, monospace;
+  font-size: 12px;
+}
+
 .terminal-cursor {
   outline: none;
   color: rgb(0, 0, 0); background-color: rgb(240, 240, 240);
