@@ -15,6 +15,26 @@ import createUuid from 'util/uuid';
  window.socket.send("{\"cols\":" + nCols + ",\"rows\":" + nRows + "}");
  }));
  */
+const TerminalStates = {
+  CONNECTING: 0,
+  OPEN: 1,
+  CLOSED: 3,
+  ERROR: 4
+};
+
+const StatusToClass = {
+  0: "connecting",
+  1: "open",
+  3: "closed",
+  4: "error"
+};
+
+const StatusToDescription = {
+  0: "connecting",
+  1: "open",
+  3: "closed",
+  4: "error"
+};
 
 class ShellTerminal extends Component {
 
@@ -35,10 +55,17 @@ class ShellTerminal extends Component {
 
     var socket = new ReduxWebSocketService(this.props.uri, this.props.webSocketId, this.props.dispatch)
       .withRawData()
+      .onOpened( () => {
+        this.setState({ connectionStatus: TerminalStates.OPEN })
+      })
       .onMsg(data => {
         term.write(data.msg)
       })
+      .onError(() => {
+        this.setState({ connectionStatus: TerminalStates.ERROR })
+      })
       .onClose(() => {
+        this.setState({ connectionStatus: TerminalStates.CLOSED });
         term.destroy()
       })
       .open();
@@ -47,12 +74,15 @@ class ShellTerminal extends Component {
       socket.send(data);
     });
 
-    this.state = { terminal: term, uuid: createUuid() };
+    this.state = { terminal: term, uuid: createUuid(), connectionStatus: TerminalStates.CONNECTING };
   }
 
   render() {
     return (
-      <div id={this.state.uuid} ></div>
+      <div>
+        <div className={StatusToClass[this.state.connectionStatus]}>Connection status: {StatusToDescription[this.state.connectionStatus]}</div>
+        <div id={this.state.uuid} ></div>
+      </div>
     );
   }
 
@@ -64,6 +94,8 @@ class ShellTerminal extends Component {
      this.props.socket.send(JSON.stringify({ ping: 1 }));
      }, 2000);*/
   }
+
+
 }
 
 const ShellTerminalConnect = connect( (state, componentProperties) => {
@@ -104,7 +136,7 @@ class Shell extends Component {
 
     return (
       <div>
-        <h2>terminal: {this.state.webSocketId}</h2>
+        <h2>Terminal for "{this.state.webSocketId}"</h2>
         <ShellTerminalConnect {...componentConfiguration} />
       </div>
     )
