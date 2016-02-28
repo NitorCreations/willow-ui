@@ -74,6 +74,10 @@ class ShellTerminal extends Component {
       socket.send(data);
     });
 
+    window.setInterval(function() {
+      socket.send(JSON.stringify({ ping: 1 }));
+    }, 5000);
+
     this.state = { terminal: term, uuid: createUuid(), connectionStatus: TerminalStates.CONNECTING };
   }
 
@@ -88,14 +92,7 @@ class ShellTerminal extends Component {
 
   componentDidMount() {
     this.state.terminal.open(document.getElementById(this.state.uuid));
-
-    /*//fixme do it better
-     window.setInterval(function() {
-     this.props.socket.send(JSON.stringify({ ping: 1 }));
-     }, 2000);*/
   }
-
-
 }
 
 const ShellTerminalConnect = connect( (state, componentProperties) => {
