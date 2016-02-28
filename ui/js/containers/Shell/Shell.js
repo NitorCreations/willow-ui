@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { ShellTerminal } from 'components';
 import './Shell.scss';
 
+//FIXME construct properly
 function resolveWebsocketUri(nCols, nRows) {
   var loc = window.location, ws_uri;
   if (loc.protocol === "https:") {
@@ -19,7 +20,7 @@ function resolveWebsocketUri(nCols, nRows) {
     ctx += loc.pathname.substring(0, ctxEnd) + "/";
   }
   ws_uri += "//" + loc.host + ctx + "rawterminal/" + loc.search + "&cols=" + nCols + "&rows=" + nRows;
-  ws_uri = "ws://localhost:5120/rawterminal/?user=@admin&host=draco&cols=105&rows=71";
+  ws_uri = "ws://localhost:5120/rawterminal/?user=@admin&host=draco&cols=" + nCols + "&rows=" + nRows;
   return ws_uri;
 }
 
@@ -65,6 +66,6 @@ class Shell extends Component {
   }
 }
 
-export default connect(state => {
+export default connect(() => {
   return {}
 }) (Shell);

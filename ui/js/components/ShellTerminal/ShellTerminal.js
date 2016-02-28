@@ -68,6 +68,7 @@ class ShellTerminal extends Component {
       socket.send(JSON.stringify({ ping: 1 }));
     }, 5000);
 
+    //FIXME react to window change, commented code doesn't work...
     //$(window).resize(() => {
     //  var rowsAndCols = calculateOptimalRowsAndCols();
     //  term.resize(rowsAndCols.cols, rowsAndCols.rows);
