@@ -47,17 +47,17 @@ class ShellTerminal extends Component {
       socket.send(data);
     });
 
-    this.state = { terminal: term };
+    this.state = { terminal: term, uuid: createUuid() };
   }
 
   render() {
     return (
-      <div id="terminal-screen"></div>
+      <div id={this.state.uuid} ></div>
     );
   }
 
   componentDidMount() {
-    this.state.terminal.open(document.getElementById("terminal-screen"));
+    this.state.terminal.open(document.getElementById(this.state.uuid));
 
     /*//fixme do it better
      window.setInterval(function() {
