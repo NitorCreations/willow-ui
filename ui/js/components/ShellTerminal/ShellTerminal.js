@@ -28,14 +28,49 @@ const StatusToDescription = {
 
 const HEARTBEAT_IN_MILLIS = 5000;
 
+function calculateOptimalRowsAndCols() {
+  var fontSize = 12; //this value should match font-size defined in Shell.scss
+  var characterWidth = fontSize;
+  var characterHeight = fontSize;
+
+  var nCols = parseInt(window.innerWidth / characterWidth) - 5;
+  var nRows = parseInt(window.innerHeight / characterHeight) - 5;
+  return {cols: nCols, rows: nRows};
+}
+
+function resolveWebsocketUri(user, host, nCols, nRows) {
+  var location = window.location;
+  var ws_protocol = resolveProtocol(location);
+  var ws_host = resolveHost(location);
+  var ws_context = resolveContext(location);
+
+  return `${ws_protocol}//${ws_host}${ws_context}/rawterminal/?user=${user}&host=${host}&cols=${nCols}&rows=${nRows}`;
+
+  function resolveProtocol(location) {
+    return location.protocol === "https:" ? "wss:" : "ws:";
+  }
+
+  function resolveHost(location) {
+    return location.host;
+  }
+
+  function resolveContext(location) {
+    return location.pathname.replace(/ui.*$/, "").substring(1);
+  }
+}
+
 class ShellTerminal extends Component {
 
   constructor(props) {
     super(props);
 
+    var rowsAndCols = calculateOptimalRowsAndCols();
+    var webSocketId = 'host_' + this.props.host;
+    var webSocketUri = resolveWebsocketUri(this.props.user, this.props.host, rowsAndCols.cols, rowsAndCols.rows);
+
     var term = new Terminal({
-      cols: this.props.cols,
-      rows: this.props.rows,
+      cols: rowsAndCols.cols,
+      rows: rowsAndCols.rows,
       screenKeys: true,
       cursorBlink: true,
       useStyles: true
@@ -45,7 +80,7 @@ class ShellTerminal extends Component {
       document.title = title;
     });
 
-    var socket = new ReduxWebSocketService(this.props.uri, this.props.webSocketId, this.props.dispatch)
+    var socket = new ReduxWebSocketService(webSocketUri, webSocketId, this.props.dispatch)
       .withRawData()
       .onOpened( () => {
         this.setState({ connectionStatus: TerminalStates.OPEN })
@@ -81,7 +116,7 @@ class ShellTerminal extends Component {
       terminal: term,
       uuid: createUuid(),
       connectionStatus: TerminalStates.CONNECTING,
-      webSocketId: this.props.webSocketId
+      webSocketId: webSocketId
     };
   }
 
