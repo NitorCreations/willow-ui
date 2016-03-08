@@ -26,6 +26,8 @@ const StatusToDescription = {
   4: "error"
 };
 
+const HEARTBEAT_IN_MILLIS = 5000;
+
 class ShellTerminal extends Component {
 
   constructor(props) {
@@ -66,7 +68,7 @@ class ShellTerminal extends Component {
 
     window.setInterval(function() {
       socket.send(JSON.stringify({ ping: 1 }));
-    }, 5000);
+    }, HEARTBEAT_IN_MILLIS);
 
     //FIXME react to window change, commented code doesn't work...
     //$(window).resize(() => {
