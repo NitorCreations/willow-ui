@@ -5,12 +5,50 @@
   src: local("Anonymous Pro"), local("Anonymous Pro-Regular"), url(../../../fonts/Anonymous-Pro.woff) format('woff')
 }
 
-.terminal {
+.shell-terminal {
+  border-style: solid;
   font-family: "Terminal Fonts", Fallback, monospace;
-  font-size: 12px;
+  font-size: 14px;
+
+  header {
+    padding: 0.4rem;
+    display: flex;
+    justify-content: space-between;
+
+    &.connecting {
+      background-color: lightskyblue;
+    }
+
+    &.open {
+    }
+
+    &.closed {
+      color: whitesmoke;
+      background-color: darkgray;
+    }
+
+    &.error {
+      color: white;
+      background-color: darkred;
+    }
+  }
+
+  .terminal-content {
+
+    .ruler {
+      position: absolute;
+      white-space: nowrap;
+    }
+
+    .terminal-container {
+      width: 100%;
+      height: 100%;
+
+      .terminal-cursor {
+        outline: none;
+        color: rgb(0, 0, 0); background-color: rgb(240, 240, 240);
+      }
+    }
+  }
 }
 
-.terminal-cursor {
-  outline: none;
-  color: rgb(0, 0, 0); background-color: rgb(240, 240, 240);
-}

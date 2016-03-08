@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import Terminal from 'term.js';
 
@@ -20,23 +21,13 @@ const StatusToClass = {
 };
 
 const StatusToDescription = {
-  0: "connecting",
-  1: "open",
-  3: "closed",
-  4: "error"
+  0: "Connecting to server...",
+  1: "Connection open",
+  3: "Connection closed",
+  4: "Connection ERROR"
 };
 
 const HEARTBEAT_IN_MILLIS = 5000;
-
-function calculateOptimalRowsAndCols() {
-  var fontSize = 12; //this value should match font-size defined in Shell.scss
-  var characterWidth = fontSize;
-  var characterHeight = fontSize;
-
-  var nCols = parseInt(window.innerWidth / characterWidth) - 5;
-  var nRows = parseInt(window.innerHeight / characterHeight) - 5;
-  return {cols: nCols, rows: nRows};
-}
 
 function resolveWebsocketUri(user, host, nCols, nRows) {
   var location = window.location;
@@ -64,7 +55,7 @@ class ShellTerminal extends Component {
   constructor(props) {
     super(props);
 
-    var rowsAndCols = calculateOptimalRowsAndCols();
+    var rowsAndCols = { rows: this.props.rows, cols: this.props.maxCols };
     var webSocketId = 'host_' + this.props.host;
     var webSocketUri = resolveWebsocketUri(this.props.user, this.props.host, rowsAndCols.cols, rowsAndCols.rows);
 
@@ -105,33 +96,58 @@ class ShellTerminal extends Component {
       socket.send(JSON.stringify({ ping: 1 }));
     }, HEARTBEAT_IN_MILLIS);
 
-    //FIXME react to window change, commented code doesn't work...
-    //$(window).resize(() => {
-    //  var rowsAndCols = calculateOptimalRowsAndCols();
-    //  term.resize(rowsAndCols.cols, rowsAndCols.rows);
-    //  socket.send(JSON.stringify(rowsAndCols));
-    //});
-
     this.state = {
-      terminal: term,
       uuid: createUuid(),
+      socket: socket,
+      terminal: term,
       connectionStatus: TerminalStates.CONNECTING,
-      webSocketId: webSocketId
+      webSocketId: webSocketId,
+      ...rowsAndCols
     };
   }
 
   render() {
     return (
-      <div>
-        <h2>Terminal for "{this.state.webSocketId}"</h2>
-        <div className={StatusToClass[this.state.connectionStatus]}>Connection status: {StatusToDescription[this.state.connectionStatus]}</div>
-        <div id={this.state.uuid} ></div>
+      <div className="shell-terminal">
+        <header className={StatusToClass[this.state.connectionStatus]}>
+          <div>ID: {this.state.webSocketId}</div>
+          <div>{StatusToDescription[this.state.connectionStatus]}</div>
+        </header>
+        <div className="terminal-content">
+          <div className="ruler">1</div>
+          <div id={this.state.uuid} className="terminal-container"></div>
+        </div>
       </div>
     );
   }
 
   componentDidMount() {
+    window.addEventListener("resize", this.updateDimensions.bind(this));
     this.state.terminal.open(document.getElementById(this.state.uuid));
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.updateDimensions.bind(this));
+  }
+
+  updateDimensions() {
+    var rowsAndCols = this.calculateOptimalRowsAndCols();
+    this.state.terminal.resize(rowsAndCols.cols, rowsAndCols.rows);
+    this.state.socket.send(JSON.stringify(rowsAndCols));
+    this.setState({
+      ...rowsAndCols
+    });
+  }
+
+  calculateOptimalRowsAndCols() {
+    var rootElement = ReactDOM.findDOMNode(this);
+    var terminalElement = rootElement.getElementsByClassName('terminal-container')[0];
+    var rulerElement = rootElement.getElementsByClassName('ruler')[0];
+
+    var characterWidth = rulerElement.clientWidth;
+    var width = terminalElement.clientWidth;
+    var nCols = Math.min(parseInt(width / characterWidth), this.props.maxCols);
+    return {cols: nCols, rows: this.props.rows };
   }
 }
 

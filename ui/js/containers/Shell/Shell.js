@@ -9,13 +9,15 @@ class Shell extends Component {
     super(props);
     this.state = {
       user: '@admin',
-      host: 'draco'
+      host: 'draco',
+      rows: 30,
+      maxCols: 120
     };
   }
 
   render() {
     return (
-      <div>
+      <div className="shell-container">
         <ShellTerminal {...this.state} />
       </div>
     )
