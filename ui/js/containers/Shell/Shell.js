@@ -3,25 +3,25 @@ import { connect } from 'react-redux';
 import { ShellTerminal } from 'components';
 import './Shell.scss';
 
-//FIXME construct properly
-function resolveWebsocketUri(nCols, nRows) {
-  var loc = window.location, ws_uri;
-  if (loc.protocol === "https:") {
-    ws_uri = "wss:";
-  } else {
-    ws_uri = "ws:";
+function resolveWebsocketUri(user, host, nCols, nRows) {
+  var location = window.location;
+  var ws_protocol = resolveProtocol(location);
+  var ws_host = resolveHost(location);
+  var ws_context = resolveContext(location);
+
+  return `${ws_protocol}//${ws_host}${ws_context}/rawterminal/?user=${user}&host=${host}&cols=${nCols}&rows=${nRows}`;
+
+  function resolveProtocol(location) {
+    return location.protocol === "https:" ? "wss:" : "ws:";
   }
-  var ctx = "/";
-  var ctxEnd = loc.pathname.lastIndexOf("/");
-  if (ctxEnd > 0) {
-    if (loc.pathname.indexOf("/") === 0) {
-      ctx = "";
-    }
-    ctx += loc.pathname.substring(0, ctxEnd) + "/";
+
+  function resolveHost(location) {
+    return location.host;
   }
-  ws_uri += "//" + loc.host + ctx + "rawterminal/" + loc.search + "&cols=" + nCols + "&rows=" + nRows;
-  ws_uri = "ws://localhost:5120/rawterminal/?user=@admin&host=draco&cols=" + nCols + "&rows=" + nRows;
-  return ws_uri;
+
+  function resolveContext(location) {
+    return location.pathname.replace(/ui.*$/, "").substring(1);
+  }
 }
 
 function calculateOptimalRowsAndCols() {
@@ -41,7 +41,7 @@ class Shell extends Component {
     var webSocketId = 'host_draco';
 
     var rowsAndCols = calculateOptimalRowsAndCols();
-    var terminalWebSocketUri = resolveWebsocketUri(rowsAndCols.cols, rowsAndCols.rows);
+    var terminalWebSocketUri = resolveWebsocketUri('@admin', 'draco', rowsAndCols.cols, rowsAndCols.rows);
 
     this.state = {
       webSocketId: webSocketId,
