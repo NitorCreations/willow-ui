@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { ShellTerminal } from 'components';
+import createUuid from '../../util/uuid';
 import './Shell.scss';
 
 function terminalConfigurations(newUser, newHost) {
@@ -8,7 +9,8 @@ function terminalConfigurations(newUser, newHost) {
     user: newUser,
     host: newHost,
     rows: 30,
-    maxCols: 120
+    maxCols: 120,
+    key: createUuid()
   };
 }
 
