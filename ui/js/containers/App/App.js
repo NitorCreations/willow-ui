@@ -11,10 +11,10 @@ export default class App extends Component {
   };
 
   menuButtons() {
-    return <span className="menu-buttons" >
-      <Link to="/ui/">Frontpage</Link>
-      <Link to="/ui/Shell">Shell</Link>
-      </span>
+    return <span >
+      <FlatButton label="Frontpage" href="" containerElement={<Link to="/ui/" />} linkButton={true}/>
+      <FlatButton label="Shell" href="" containerElement={<Link to="/ui/Shell" />} linkButton={true}/>
+    </span>
   }
 
   render() {
@@ -23,14 +23,8 @@ export default class App extends Component {
         <AppBar
           onLeftIconButtonTouchTap={() => console.log('jee')}
           iconClassNameRight="muidocs-icon-navigation-expand-more"
-          title={this.menuButtons()}
-        >
-        </AppBar>
+          title={this.menuButtons()} />
 
-        <ul>
-          <li><FlatButton href="/ui/Shell" linkButton={false} label="Frontpage"  /></li>
-          <li><FlatButton href="/ui/Shell" linkButton={true} label="Shell"/></li>
-        </ul>
         <main className="container">
           {this.props.children}
         </main>
