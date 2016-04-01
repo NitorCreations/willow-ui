@@ -1,17 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { ConfigurationDisplay } from 'components';
+import { HorizonGraph, ConfigurationDisplay } from 'components';
 import './Radiator.scss';
-
-class HorizonGraph extends Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    return <div>{this.props.config.uid()}</div>
-  }
-}
 
 function resolveGraph(config) {
     switch(config.graph_type()) {
