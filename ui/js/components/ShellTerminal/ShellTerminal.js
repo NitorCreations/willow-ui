@@ -73,7 +73,7 @@ class ShellTerminal extends Component {
 
     var socket = new ReduxWebSocketService(webSocketUri, webSocketId, this.props.dispatch)
       .withRawData()
-      .onOpened( () => {
+      .onOpened(() => {
         this.setState({ connectionStatus: TerminalStates.OPEN });
       })
       .onMsg(data => {
@@ -85,8 +85,7 @@ class ShellTerminal extends Component {
       .onClose(() => {
         this.setState({ connectionStatus: TerminalStates.CLOSED });
         term.destroy();
-      })
-      .open();
+      });
 
     term.on('data', data => {
       socket.send(data);
@@ -124,10 +123,12 @@ class ShellTerminal extends Component {
   componentDidMount() {
     window.addEventListener('resize', this.updateDimensions.bind(this));
     this.state.terminal.open(document.getElementById(this.state.uuid));
+    this.state.socket.open();
   }
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.updateDimensions.bind(this));
+    this.state.socket.close();
   }
 
   updateDimensions() {
