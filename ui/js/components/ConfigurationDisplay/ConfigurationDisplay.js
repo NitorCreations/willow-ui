@@ -35,18 +35,10 @@ class ConfigurationDisplay extends PureComponent {
   }
 
   render() {
-    var rows = this.props.configurations.radiators().map(radiator => {
-      return radiatorConfigurationView(radiator);
-    });
-
-    return (<div name="hosts">
-        <h3>Configured radiators:</h3>
-        <ul>{rows}</ul>
-      </div>
-    );
+    return radiatorConfigurationView(this.props.radiatorConfiguration);
   }
 }
 
-export default connect( state => {
-  return { configurations: state.get('configurations') };
+export default connect( (state, configuration) => {
+  return { radiatorConfiguration: state.get('configurations').radiator(configuration.radiatorId) };
 } ) (ConfigurationDisplay);

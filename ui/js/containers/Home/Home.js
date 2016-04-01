@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { CounterButton, WebSocketStatus, HostDisplay, ConfigurationDisplay } from 'components';
+import { CounterButton, WebSocketStatus, HostDisplay } from 'components';
 import './Home.scss';
 
 export default class Home extends Component {
@@ -14,7 +14,6 @@ export default class Home extends Component {
                 <CounterButton name="Foobar counter"/>
                 <HostDisplay />
                 <WebSocketStatus/>
-                <ConfigurationDisplay />
             </div>
         );
     }

@@ -13,6 +13,7 @@ export default class App extends Component {
         <ul>
           <li><Link to="/ui/">Frontpage</Link></li>
           <li><Link to="/ui/Shell">Shell</Link></li>
+          <li><Link to="/ui/Radiator/group-1">Radiator</Link></li>
         </ul>
         <main className="container">
           {this.props.children}

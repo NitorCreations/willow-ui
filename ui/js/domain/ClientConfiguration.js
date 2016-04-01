@@ -15,6 +15,10 @@ class ClientConfiguration extends Serializable {
   radiators() {
     return this._data.get('radiators').valueSeq();
   }
+
+  radiator(id) {
+    return this._data.getIn(['radiators',id])
+  }
 }
 
 export default ClientConfiguration;
