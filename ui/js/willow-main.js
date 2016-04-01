@@ -13,8 +13,12 @@ import Immutable from 'immutable';
 
 import startup from './service/Startup';
 
+import injectTapEventPlugin from 'react-tap-event-plugin';
+
 const history = createBrowserHistory();
 const store = configureStore(Immutable.fromJS({}));
+
+injectTapEventPlugin();
 
 // syncReduxAndRouter assumes that store is plain js object.
 // immutableStoreConverter gives a view of Immutable store as a plain js object
