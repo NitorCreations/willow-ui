@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import Terminal from 'term.js';
@@ -14,17 +14,17 @@ const TerminalStates = {
 };
 
 const StatusToClass = {
-  0: "connecting",
-  1: "open",
-  3: "closed",
-  4: "error"
+  0: 'connecting',
+  1: 'open',
+  3: 'closed',
+  4: 'error'
 };
 
 const StatusToDescription = {
-  0: "Connecting to server...",
-  1: "Connection open",
-  3: "Connection closed",
-  4: "Connection ERROR"
+  0: 'Connecting to server...',
+  1: 'Connection open',
+  3: 'Connection closed',
+  4: 'Connection ERROR'
 };
 
 const HEARTBEAT_IN_MILLIS = 5000;
@@ -38,7 +38,7 @@ function resolveWebsocketUri(user, host, nCols, nRows) {
   return `${ws_protocol}//${ws_host}${ws_context}/rawterminal/?user=${user}&host=${host}&cols=${nCols}&rows=${nRows}`;
 
   function resolveProtocol(location) {
-    return location.protocol === "https:" ? "wss:" : "ws:";
+    return location.protocol === 'https:' ? 'wss:' : 'ws:';
   }
 
   function resolveHost(location) {
@@ -46,7 +46,7 @@ function resolveWebsocketUri(user, host, nCols, nRows) {
   }
 
   function resolveContext(location) {
-    return location.pathname.replace(/ui.*$/, "").substring(1);
+    return location.pathname.replace(/ui.*$/, '').substring(1);
   }
 }
 
@@ -74,17 +74,17 @@ class ShellTerminal extends Component {
     var socket = new ReduxWebSocketService(webSocketUri, webSocketId, this.props.dispatch)
       .withRawData()
       .onOpened( () => {
-        this.setState({ connectionStatus: TerminalStates.OPEN })
+        this.setState({ connectionStatus: TerminalStates.OPEN });
       })
       .onMsg(data => {
-        term.write(data.msg)
+        term.write(data.msg);
       })
       .onError(() => {
-        this.setState({ connectionStatus: TerminalStates.ERROR })
+        this.setState({ connectionStatus: TerminalStates.ERROR });
       })
       .onClose(() => {
         this.setState({ connectionStatus: TerminalStates.CLOSED });
-        term.destroy()
+        term.destroy();
       })
       .open();
 
@@ -122,12 +122,12 @@ class ShellTerminal extends Component {
   }
 
   componentDidMount() {
-    window.addEventListener("resize", this.updateDimensions.bind(this));
+    window.addEventListener('resize', this.updateDimensions.bind(this));
     this.state.terminal.open(document.getElementById(this.state.uuid));
   }
 
   componentWillUnmount() {
-    window.removeEventListener("resize", this.updateDimensions.bind(this));
+    window.removeEventListener('resize', this.updateDimensions.bind(this));
   }
 
   updateDimensions() {
@@ -154,5 +154,5 @@ class ShellTerminal extends Component {
 export default connect( (state, componentProperties) => {
   return {
     componentProperties,
-  }
+  };
 }) (ShellTerminal);

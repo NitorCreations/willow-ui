@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { ShellTerminal } from 'components';
 import './Shell.scss';
@@ -18,8 +18,8 @@ class Shell extends Component {
     super(props);
     this.state = {
       terminals: [],
-      newUser: "@admin",
-      newHost: "hostname"
+      newUser: '@admin',
+      newHost: 'hostname'
     };
   }
 
@@ -36,32 +36,32 @@ class Shell extends Component {
           </form>
         </header>
         {terminals.map(terminalConfig => {
-          return <ShellTerminal {...terminalConfig} />
+          return (<ShellTerminal {...terminalConfig} />);
         })}
       </div>
-    )
+    );
   }
 
   handleSubmit(event) {
     event.preventDefault();
     this.setState({
       terminals: this.state.terminals.concat(terminalConfigurations(this.state.newUser, this.state.newHost))
-    })
+    });
   }
 
   updateUserName(event) {
     this.setState({
       newUser: event.target.value
-    })
+    });
   }
 
   updateHost(event) {
     this.setState({
       newHost: event.target.value
-    })
+    });
   }
 }
 
 export default connect(() => {
-  return {}
+  return {};
 }) (Shell);

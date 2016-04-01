@@ -37,10 +37,10 @@ class ReduxWebSocketService extends WebSocketService {
 
   withRawData() {
     this.deSerializeData = data => {
-      return data
+      return data;
     };
     this.serializeData = data => {
-      return data
+      return data;
     };
     return this;
   }

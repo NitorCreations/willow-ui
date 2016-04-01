@@ -9,7 +9,7 @@ class Radiator extends Serializable {
       return graphs.map(graph => {
         return new Graph(graph);
       });
-    })
+    });
   }
 
   title() {
