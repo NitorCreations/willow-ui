@@ -61,6 +61,8 @@
     "redux-simple-router": "0.0.8",
     "redux-thunk": "1.0.3",
     "term.js": "0.0.7"
+    "d3": "^3.5.9",
+    "cubism": "^1.6.0"
   },
   "devDependencies": {
     "autoprefixer-loader": "3.2.0",
