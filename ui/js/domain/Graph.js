@@ -8,8 +8,8 @@ class Graph extends Serializable {
     this._data = this._data.updateIn(['metrics'], metrics => {
       return metrics.map(metric => {
         return new Metric(metric);
-      })
-    })
+      });
+    });
   }
 
   uid() {

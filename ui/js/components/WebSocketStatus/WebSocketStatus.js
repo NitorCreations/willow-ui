@@ -1,7 +1,6 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import PureComponent from 'react-pure-render/component';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 
 class WebSocketStatus extends PureComponent {
   constructor(props) {
@@ -19,9 +18,10 @@ class WebSocketStatus extends PureComponent {
       </li>);
     });
 
-    return (<div name="websockets">
-          <h3>Web sockets:</h3>
-          <ul>{rows}</ul>
+    return (
+      <div name="websockets">
+        <h3>Web sockets:</h3>
+        <ul>{rows}</ul>
       </div>
     );
   }

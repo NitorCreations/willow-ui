@@ -8,8 +8,8 @@ class ClientConfiguration extends Serializable {
     this._data = this._data.updateIn(['radiators'], radiators => {
       return radiators.map(radiator => {
         return new Radiator(radiator);
-      })
-    })
+      });
+    });
   }
 
   radiators() {

@@ -21,14 +21,14 @@ const store = configureStore(Immutable.fromJS({}));
 function immutableStoreConverter(store, reducerName) {
   return {
     getState: function () {
-        return { [reducerName]: store.getState().get(reducerName).toJS() };
-      },
+      return { [reducerName]: store.getState().get(reducerName).toJS() };
+    },
     subscribe: function (listener) {
-        store.subscribe(listener);
-      },
+      store.subscribe(listener);
+    },
     dispatch: function (action) {
-        store.dispatch(action);
-      }
+      store.dispatch(action);
+    }
   };
 }
 syncReduxAndRouter(history, immutableStoreConverter(store, 'routing'));
@@ -36,16 +36,16 @@ syncReduxAndRouter(history, immutableStoreConverter(store, 'routing'));
 startup(store.dispatch);
 
 ReactDOM.render(
-    <div>
-        <Provider store={store}>
-            <Router history={history}>
-                {routes}
-            </Router>
-        </Provider>
-        <DebugPanel top right bottom>
-            <DevTools store={store} monitor={LogMonitor} />
-        </DebugPanel>
-    </div>
-    ,
-    document.getElementById('app-root')
+  <div>
+    <Provider store={store}>
+      <Router history={history}>
+        {routes}
+      </Router>
+    </Provider>
+    <DebugPanel top right bottom>
+      <DevTools store={store} monitor={LogMonitor} />
+    </DebugPanel>
+  </div>
+  ,
+  document.getElementById('app-root')
 );

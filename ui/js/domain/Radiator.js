@@ -7,8 +7,8 @@ class Radiator extends Serializable {
     super(data);
     this._data = this._data.updateIn(['graphs'], graphs => {
       return graphs.map(graph => {
-        return new Graph(graph)
-      })
+        return new Graph(graph);
+      });
     })
   }
 

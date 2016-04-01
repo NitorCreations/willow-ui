@@ -14,10 +14,10 @@ function immutableConverter(reducer) {
   return function(state, action) {
     const oldState = state ? state.toJS() : undefined;
     const newState = reducer(oldState, action);
-        // check for equal reference. If reducer doesn't modify, state neither should this converter
+    // check for equal reference. If reducer doesn't modify, state neither should this converter
     if(oldState === newState) {
-        return state;
-      }
+      return state;
+    }
     return Immutable.fromJS(newState);
   };
 }

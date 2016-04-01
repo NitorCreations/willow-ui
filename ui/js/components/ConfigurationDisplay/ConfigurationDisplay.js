@@ -11,10 +11,10 @@ function GraphView(graph) {
       {graph.metrics().map(m => {
         return (<li key={m.instance_tag()}>
           { m.instance_tag() } : { m.metric_key() }
-        </li>)
+        </li>);
       })}
     </ul>
-  </li>)
+  </li>);
 }
 
 function radiatorConfigurationView(radiator) {
@@ -36,7 +36,7 @@ class ConfigurationDisplay extends PureComponent {
 
   render() {
     var rows = this.props.configurations.radiators().map(radiator => {
-       return radiatorConfigurationView(radiator);
+      return radiatorConfigurationView(radiator);
     });
 
     return (<div name="hosts">
