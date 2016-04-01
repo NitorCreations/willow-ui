@@ -1,14 +1,22 @@
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
+import { connect } from 'react-redux';
 import FlatButton from 'material-ui/lib/flat-button';
-
+import { LeftMenu } from 'components';
 import AppBar from 'material-ui/lib/app-bar';
+import * as menuActions from 'menu/MenuActions';
+import { bindActionCreators } from 'redux';
 import './App.scss'
 
-export default class App extends Component {
+class App extends Component {
   static propTypes = {
     children: React.PropTypes.any
   };
+
+  constructor(props) {
+    super(props);
+    this.menuActions = bindActionCreators(menuActions, this.props.dispatch);
+  }
 
   menuButtons() {
     return <span >
@@ -21,10 +29,11 @@ export default class App extends Component {
     return (
       <div>
         <AppBar
-          onLeftIconButtonTouchTap={() => console.log('jee')}
+          onLeftIconButtonTouchTap={() => this.menuActions.open() }
           iconClassNameRight="muidocs-icon-navigation-expand-more"
           title={this.menuButtons()} />
 
+        <LeftMenu/>
         <main className="container">
           {this.props.children}
         </main>
@@ -33,3 +42,6 @@ export default class App extends Component {
   }
 }
 
+export default connect( () => {
+  return {};
+} ) (App);

@@ -5,6 +5,7 @@ import { counters } from './counters';
 import { websockets } from '../websocket/WebSocketReducer';
 import { hosts } from '../hosts/HostReducer';
 import { configurations } from '../configuration/ConfigurationReducer';
+import { menus } from '../menu/MenuReducer';
 
 import { routeReducer } from 'redux-simple-router';
 
@@ -26,6 +27,7 @@ const rootReducer = combineReducers({
   counters,
   websockets,
   hosts,
+  menus,
   configurations,
   routing: immutableConverter(routeReducer)
 });
