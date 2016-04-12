@@ -1,8 +1,9 @@
 var http = require('http');
 var express = require('express');
+var redirect = require("express-redirect");
 var app = express();
 
-app.use(require('morgan')('short'));
+redirect(app.use(require('morgan')('short')));
 
 (function initWebpack() {
     var webpack = require('webpack');
@@ -20,9 +21,7 @@ app.use(require('morgan')('short'));
     app.use(express.static(__dirname + '/'));
 })();
 
-app.get('/*', function(req, res) {
-  res.redirect('/ui');
-});
+app.redirect('/:path', '/ui/:path');
 
 // respond to everything with the index.html contents
 // to make domain.fi/settings style URLs work without hashes
